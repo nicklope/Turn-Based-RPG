@@ -16,7 +16,10 @@ const attack = (attacker, attacked) => {
   console.log(`${attacker.name} goes for the attack!`)
   attacked.hp -= attacker.damage
   console.log(`${attacked.name} took ${attacker.damage} points of damage!`)
-  enemyTurn(slime)
+  enemyTurn(attacked)
+}
+const randomRange = (min, max) => {
+  return Math.floor(Math.random() * (max - min) + min)
 }
 // Obects + constructors
 
@@ -24,7 +27,7 @@ const player = {
   name: 'Player',
   hp: 100,
   mp: 100,
-  damage: 10,
+  damage: randomRange(7, 14),
   fireSpell: 10,
   thunderSpell: 10,
   guarding: false,
@@ -43,7 +46,7 @@ const player = {
   fireAttack(enemy) {
     if (player.mp > 25) {
       console.log(`${player.name} starts conjuring a fire spell!`)
-      if (enemy.enemyWeaknesses.includes('fire')) {
+      if (enemy.weaknesses.includes('fire')) {
         enemy.hp -= player.fireSpell * 1.5
         console.log(`Its highly effective!`)
         console.log(
@@ -51,7 +54,7 @@ const player = {
         )
         player.mp -= 25
         enemyTurn(enemy)
-      } else if (enemy.enemyResistances.includes('fire')) {
+      } else if (enemy.resistances.includes('fire')) {
         enemy.hp += player.fireSpell
         console.log(`Ah! Its no use! Fire is only making it stronger!`)
         player.mp -= 25
@@ -65,7 +68,7 @@ const player = {
   thunderAttack(enemy) {
     if (player.mp > 25) {
       console.log(`${player.name} starts conjuring a thunder spell!`)
-      if (enemy.enemyWeaknesses.includes('thunder')) {
+      if (enemy.weaknesses.includes('thunder')) {
         enemy.hp -= player.thunderSpell * 1.5
         console.log(`Its highly effective!`)
         console.log(
@@ -73,7 +76,7 @@ const player = {
         )
         player.mp -= 25
         enemyTurn(enemy)
-      } else if (enemy.enemyResistances.includes('thunder')) {
+      } else if (enemy.resistances.includes('thunder')) {
         enemy.hp += player.thunderSpell - 5
         console.log(`Ah! Its no use! Thunder is only making it stronger!`)
         player.mp -= 25
@@ -90,9 +93,9 @@ const slime = {
   name: 'Slime',
   hp: 100,
   mp: 100,
-  damage: 10,
-  enemyWeaknesses: ['fire'],
-  enemyResistances: ['thunder'],
+  damage: randomRange(7, 10),
+  weaknesses: ['fire'],
+  resistances: ['thunder'],
   enemyPhrases: []
 }
 
@@ -101,3 +104,6 @@ const slime = {
 console.log(attack(player, slime))
 console.log(player.fireAttack(slime))
 console.log(player.thunderAttack(slime))
+console.log(attack(player, slime))
+console.log(attack(player, slime))
+console.log(attack(player, slime))
