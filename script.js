@@ -2,28 +2,29 @@
 
 // Functions
 
-const enemyTurn = () => {
-  console.log(`${firstEnemy.enemyName} came out swinging!`)
+const enemyTurn = (enemy) => {
+  console.log(`${enemy.name} came out swinging!`)
   if (player.guarding === false) {
-    player.playerHp -= firstEnemy.enemyAttacks
-    console.log(
-      `${player.playerName} took ${firstEnemy.enemyAttacks} points of damage!`
-    )
+    player.hp -= enemy.damage
+    console.log(`${player.name} took ${enemy.damage} points of damage!`)
   } else {
-    console.log(
-      `${firstEnemy.enemyName}'s attack bounced right off ${player.playerName}`
-    )
+    console.log(`${enemy.name}'s attack bounced right off ${player.name}`)
     player.guarding = false
   }
 }
-
+const attack = (attacker, attacked) => {
+  console.log(`${attacker.name} goes for the attack!`)
+  attacked.hp -= attacker.damage
+  console.log(`${attacked.name} took ${attacker.damage} points of damage!`)
+  enemyTurn(slime)
+}
 // Obects + constructors
 
 const player = {
-  playerName: 'Player',
-  playerHp: 100,
-  playerMp: 100,
-  playerAttacks: 10,
+  name: 'Player',
+  hp: 100,
+  mp: 100,
+  damage: 10,
   fireSpell: 10,
   thunderSpell: 10,
   guarding: false,
@@ -33,73 +34,70 @@ const player = {
     player.guarding = true
     enemyTurn()
   },
-  attack(enemy) {
-    console.log(`${this.playerName} goes for the attack!`)
-    enemy.enemyHp -= this.playerAttacks
-    console.log(
-      `${enemy.enemyName} took ${this.playerAttacks} points of damage!`
-    )
+  useItem() {
+    console.log(`${player.playerName} ate a delicious bagel...`)
+    console.log(`${this.playerName} gained back 10 hp!`)
+    this.playerHp += 10
     enemyTurn()
   },
   fireAttack(enemy) {
-    console.log(`${this.playerName} starts conjuring a fire spell!`)
-    if (firstEnemy.enemyWeaknesses.includes('fire')) {
-      firstEnemy.enemyHp -= player.fireSpell * 1.5
-      console.log(`Its highly effective!`)
-      console.log(
-        `${firstEnemy.enemyName} took ${
-          player.fireSpell * 1.5
-        } points of damage!`
-      )
-      enemyTurn()
-    } else if (firstEnemy.enemyResistances.includes('fire')) {
-      firstEnemy.enemyHp += player.fireSpell
-      console.log(`Ah! Its no use! Fire is only making it stronger!`)
-      enemyTurn()
+    if (player.mp > 25) {
+      console.log(`${player.name} starts conjuring a fire spell!`)
+      if (enemy.enemyWeaknesses.includes('fire')) {
+        enemy.hp -= player.fireSpell * 1.5
+        console.log(`Its highly effective!`)
+        console.log(
+          `${enemy.name} took ${player.fireSpell * 1.5} points of damage!`
+        )
+        player.mp -= 25
+        enemyTurn(enemy)
+      } else if (enemy.enemyResistances.includes('fire')) {
+        enemy.hp += player.fireSpell
+        console.log(`Ah! Its no use! Fire is only making it stronger!`)
+        player.mp -= 25
+        enemyTurn(enemy)
+      }
+    } else {
+      console.log('Not enough MP!')
+      enemyTurn(enemy)
     }
   },
   thunderAttack(enemy) {
-    console.log(`${this.playerName} starts conjuring a thunder spell!`)
-    if (firstEnemy.enemyWeaknesses.includes('thunder')) {
-      firstEnemy.enemyHp -= player.thunderSpell * 1.5
-      console.log(`Its highly effective!`)
-      console.log(
-        `${firstEnemy.enemyName} took ${
-          player.thunderSpell * 1.5
-        } points of damage!`
-      )
-      enemyTurn()
-    } else if (firstEnemy.enemyResistances.includes('thunder')) {
-      firstEnemy.enemyHp += player.thunderSpell - 5
-      console.log(`Ah! Its no use! Fire is only making it stronger!`)
-      enemyTurn()
+    if (player.mp > 25) {
+      console.log(`${player.name} starts conjuring a thunder spell!`)
+      if (enemy.enemyWeaknesses.includes('thunder')) {
+        enemy.hp -= player.thunderSpell * 1.5
+        console.log(`Its highly effective!`)
+        console.log(
+          `${enemy.name} took ${player.thunderSpell * 1.5} points of damage!`
+        )
+        player.mp -= 25
+        enemyTurn(enemy)
+      } else if (enemy.enemyResistances.includes('thunder')) {
+        enemy.hp += player.thunderSpell - 5
+        console.log(`Ah! Its no use! Thunder is only making it stronger!`)
+        player.mp -= 25
+        enemyTurn(enemy)
+      }
+    } else {
+      console.log('Not enough MP!')
+      enemyTurn(enemy)
     }
   }
 }
 
-const firstEnemy = {
-  enemyName: 'Slime',
-  enemyHp: 100,
-  enemyMp: 100,
-  enemyAttacks: 10,
+const slime = {
+  name: 'Slime',
+  hp: 100,
+  mp: 100,
+  damage: 10,
   enemyWeaknesses: ['fire'],
   enemyResistances: ['thunder'],
-  enemyPhrases: [],
-  attack() {
-    console.log('Take this!')
-  }
+  enemyPhrases: []
 }
 
 // Event Listeners
-console.log(player.attack(firstEnemy))
-console.log(player.playerHp, firstEnemy.enemyHp)
-console.log(player.attack(firstEnemy))
-console.log(player.playerHp, firstEnemy.enemyHp)
-console.log(player.attack(firstEnemy))
-console.log(player.playerHp, firstEnemy.enemyHp)
-console.log(player.guard())
-console.log(player.playerHp, firstEnemy.enemyHp)
-console.log(player.fireAttack(firstEnemy))
-console.log(player.playerHp, firstEnemy.enemyHp)
-console.log(player.thunderAttack(firstEnemy))
-console.log(player.playerHp, firstEnemy.enemyHp)
+
+console.log(attack(player, slime))
+console.log(player.fireAttack(slime))
+console.log(player.thunderAttack(slime))
