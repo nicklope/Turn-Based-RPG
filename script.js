@@ -13,6 +13,7 @@ const enemyTurn = () => {
     console.log(
       `${firstEnemy.enemyName}'s attack bounced right off ${player.playerName}`
     )
+    player.guarding = false
   }
 }
 
@@ -24,6 +25,7 @@ const player = {
   playerMp: 100,
   playerAttacks: 10,
   fireSpell: 10,
+  thunderSpell: 10,
   guarding: false,
   playerItems: [],
   guard() {
@@ -55,6 +57,23 @@ const player = {
       console.log(`Ah! Its no use! Fire is only making it stronger!`)
       enemyTurn()
     }
+  },
+  thunderAttack(enemy) {
+    console.log(`${this.playerName} starts conjuring a thunder spell!`)
+    if (firstEnemy.enemyWeaknesses.includes('thunder')) {
+      firstEnemy.enemyHp -= player.thunderSpell * 1.5
+      console.log(`Its highly effective!`)
+      console.log(
+        `${firstEnemy.enemyName} took ${
+          player.thunderSpell * 1.5
+        } points of damage!`
+      )
+      enemyTurn()
+    } else if (firstEnemy.enemyResistances.includes('thunder')) {
+      firstEnemy.enemyHp += player.thunderSpell - 5
+      console.log(`Ah! Its no use! Fire is only making it stronger!`)
+      enemyTurn()
+    }
   }
 }
 
@@ -63,8 +82,8 @@ const firstEnemy = {
   enemyHp: 100,
   enemyMp: 100,
   enemyAttacks: 10,
-  enemyWeaknesses: [''],
-  enemyResistances: ['fire'],
+  enemyWeaknesses: ['fire'],
+  enemyResistances: ['thunder'],
   enemyPhrases: [],
   attack() {
     console.log('Take this!')
@@ -72,5 +91,15 @@ const firstEnemy = {
 }
 
 // Event Listeners
-
+console.log(player.attack(firstEnemy))
+console.log(player.playerHp, firstEnemy.enemyHp)
+console.log(player.attack(firstEnemy))
+console.log(player.playerHp, firstEnemy.enemyHp)
+console.log(player.attack(firstEnemy))
+console.log(player.playerHp, firstEnemy.enemyHp)
 console.log(player.guard())
+console.log(player.playerHp, firstEnemy.enemyHp)
+console.log(player.fireAttack(firstEnemy))
+console.log(player.playerHp, firstEnemy.enemyHp)
+console.log(player.thunderAttack(firstEnemy))
+console.log(player.playerHp, firstEnemy.enemyHp)
