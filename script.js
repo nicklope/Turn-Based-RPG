@@ -35,6 +35,7 @@ const clearActionBar = (parent) => {
   actionBar.style.alignItems = 'center'
 }
 const appendActionBar = () => {
+  actionBar.style.animationName = 'still'
   actionBar.innerText = ''
   actionBar.style.display = 'grid'
   actionBar.style.justifyContent = ''
@@ -48,15 +49,17 @@ const randomRange = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min)
 }
 
-const attack = (attacker, attacked) => {
+const attack = (player, enemy) => {
   clearActionBar(actionBar)
-  actionBar.innerText = `${attacker.name} goes for the attack!`
-  attacked.hp -= attacker.damage
+  player.damage = randomRange(100, 140)
+  actionBar.innerText = `${player.name} goes for the attack!`
+  enemy.hp -= player.damage
   setTimeout(function () {
     enemyDiv.style.animationName = 'blink'
-    actionBar.innerText = `${attacked.name} took ${attacker.damage} points of damage!`
+    actionBar.innerText = `${enemy.name} took ${player.damage} points of damage!`
   }, 1250)
-  enemyTurn(attacked)
+
+  enemyTurn(enemy)
 }
 const guard = (attacker, attacked) => {
   clearActionBar(actionBar)
@@ -75,21 +78,28 @@ const useItem = (attacker, attacked) => {
   enemyTurn(attacked)
 }
 const enemyTurn = (enemy) => {
+  enemy.damage = randomRange(7, 14)
   setTimeout(function () {
-    enemyDiv.style.animationName = ''
+    enemyDiv.style.animationName = 'still'
     actionBar.innerText = `${enemy.name} came out swinging!`
   }, 3000)
   setTimeout(function () {
     if (player.guarding === false) {
       player.hp -= enemy.damage
+      actionBar.style.animationName = 'shake'
       actionBar.innerText = `${player.name} took ${enemy.damage} points of damage!`
-      // setTimeout(appendActionBar(), 6500)
+      setTimeout(appendActionBar, 1500)
     } else {
       actionBar.innerText = `${enemy.name}'s attack bounced right off ${player.name}!`
       player.guarding = false
-      // setTimeout(appendActionBar(), 6500)
+      setTimeout(appendActionBar, 1500)
     }
   }, 5000)
+}
+
+const youWin = () => {
+  clearActionBar(actionBar)
+  actionBar.innerText = 'YOU WIN'
 }
 // Obects + constructors
 
@@ -97,7 +107,7 @@ const player = {
   name: 'Player',
   hp: 100,
   mp: 100,
-  damage: randomRange(7, 14),
+  damage: '',
   fireSpell: 10,
   thunderSpell: 10,
   guarding: false,
@@ -152,7 +162,7 @@ const slime = {
   name: 'Annoying Bug',
   hp: 100,
   mp: 100,
-  damage: randomRange(7, 10),
+  damage: '',
   weaknesses: ['fire'],
   resistances: ['thunder'],
   enemyPhrases: []
