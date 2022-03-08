@@ -29,18 +29,35 @@ const clearActionBar = (parent) => {
   actionBar.style.justifyContent = 'center'
   actionBar.style.alignItems = 'center'
 }
+const appendActionBar = () => {
+  actionBar.innerText = ''
+  actionBar.style.display = 'grid'
+  actionBar.style.justifyContent = ''
+  actionBar.style.alignItems = ''
+  actionBar.appendChild(attackBtn)
+  actionBar.appendChild(magicBtn)
+  actionBar.appendChild(guardBtn)
+  actionBar.appendChild(itemBtn)
+}
 const randomRange = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min)
 }
+
 const enemyTurn = (enemy) => {
-  console.log(`${enemy.name} came out swinging!`)
-  if (player.guarding === false) {
-    player.hp -= enemy.damage
-    console.log(`${player.name} took ${enemy.damage} points of damage!`)
-  } else {
-    console.log(`${enemy.name}'s attack bounced right off ${player.name}`)
-    player.guarding = false
-  }
+  setTimeout(function () {
+    actionBar.innerText = `${enemy.name} came out swinging!`
+  }, 3000)
+  setTimeout(function () {
+    if (player.guarding === false) {
+      player.hp -= enemy.damage
+      actionBar.innerText = `${player.name} took ${enemy.damage} points of damage!`
+      // setTimeout(appendActionBar(), 6500)
+    } else {
+      actionBar.innerText = `${enemy.name}'s attack bounced right off ${player.name}!`
+      player.guarding = false
+      // setTimeout(appendActionBar(), 6500)
+    }
+  }, 5000)
 }
 const attack = (attacker, attacked) => {
   clearActionBar(actionBar)
@@ -48,9 +65,16 @@ const attack = (attacker, attacked) => {
   attacked.hp -= attacker.damage
   setTimeout(function () {
     actionBar.innerText = `${attacked.name} took ${attacker.damage} points of damage!`
-  }, 1000)
+  }, 1250)
   enemyTurn(attacked)
 }
+const guard = (attacker, attacked) => {
+  clearActionBar(actionBar)
+  actionBar.innerText = `${attacker.name} braced for an attack!`
+  attacker.guarding = true
+  enemyTurn(attacked)
+}
+const useItem = () => {}
 // Obects + constructors
 
 const player = {
@@ -62,11 +86,6 @@ const player = {
   thunderSpell: 10,
   guarding: false,
   playerItems: [],
-  guard() {
-    console.log(`${player.playerName} braced for an attack!`)
-    player.guarding = true
-    enemyTurn()
-  },
   useItem() {
     console.log(`${player.playerName} ate a delicious bagel...`)
     console.log(`${this.playerName} gained back 10 hp!`)
@@ -133,4 +152,7 @@ const slime = {
 
 attackBtn.addEventListener('click', () => {
   attack(player, slime)
+})
+guardBtn.addEventListener('click', () => {
+  guard(player, slime)
 })
