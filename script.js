@@ -21,7 +21,14 @@ actionBar.appendChild(guardBtn)
 actionBar.appendChild(itemBtn)
 
 // Functions
-
+const clearActionBar = (parent) => {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild)
+  }
+}
+const randomRange = (min, max) => {
+  return Math.floor(Math.random() * (max - min) + min)
+}
 const enemyTurn = (enemy) => {
   console.log(`${enemy.name} came out swinging!`)
   if (player.guarding === false) {
@@ -33,13 +40,11 @@ const enemyTurn = (enemy) => {
   }
 }
 const attack = (attacker, attacked) => {
-  console.log(`${attacker.name} goes for the attack!`)
+  clearActionBar(actionBar)
+  actionBar.innerText = `${attacker.name} goes for the attack!`
   attacked.hp -= attacker.damage
   console.log(`${attacked.name} took ${attacker.damage} points of damage!`)
   enemyTurn(attacked)
-}
-const randomRange = (min, max) => {
-  return Math.floor(Math.random() * (max - min) + min)
 }
 // Obects + constructors
 
