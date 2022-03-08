@@ -16,9 +16,13 @@ itemBtn.id = 'item-btn'
 itemBtn.className = 'action-btn'
 
 actionBar.appendChild(attackBtn)
+attackBtn.innerText = 'attack'
 actionBar.appendChild(magicBtn)
+magicBtn.innerText = 'magic'
 actionBar.appendChild(guardBtn)
+guardBtn.innerText = 'guard'
 actionBar.appendChild(itemBtn)
+itemBtn.innerText = 'items'
 
 // Functions
 const clearActionBar = (parent) => {
@@ -43,6 +47,31 @@ const randomRange = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min)
 }
 
+const attack = (attacker, attacked) => {
+  clearActionBar(actionBar)
+  actionBar.innerText = `${attacker.name} goes for the attack!`
+  attacked.hp -= attacker.damage
+  setTimeout(function () {
+    actionBar.innerText = `${attacked.name} took ${attacker.damage} points of damage!`
+  }, 1250)
+  enemyTurn(attacked)
+}
+const guard = (attacker, attacked) => {
+  clearActionBar(actionBar)
+  actionBar.innerText = `${attacker.name} braced for an attack!`
+  attacker.guarding = true
+  enemyTurn(attacked)
+}
+const useItem = (attacker, attacked) => {
+  clearActionBar(actionBar)
+  actionBar.innerText = `${attacker.name} ate a delicious bagel...`
+  attacker.hp += 10
+  setTimeout(function () {
+    actionBar.innerText = `${attacker.name} gained back 10 hp!`
+  }, 1750)
+
+  enemyTurn(attacked)
+}
 const enemyTurn = (enemy) => {
   setTimeout(function () {
     actionBar.innerText = `${enemy.name} came out swinging!`
@@ -59,22 +88,6 @@ const enemyTurn = (enemy) => {
     }
   }, 5000)
 }
-const attack = (attacker, attacked) => {
-  clearActionBar(actionBar)
-  actionBar.innerText = `${attacker.name} goes for the attack!`
-  attacked.hp -= attacker.damage
-  setTimeout(function () {
-    actionBar.innerText = `${attacked.name} took ${attacker.damage} points of damage!`
-  }, 1250)
-  enemyTurn(attacked)
-}
-const guard = (attacker, attacked) => {
-  clearActionBar(actionBar)
-  actionBar.innerText = `${attacker.name} braced for an attack!`
-  attacker.guarding = true
-  enemyTurn(attacked)
-}
-const useItem = () => {}
 // Obects + constructors
 
 const player = {
@@ -86,12 +99,6 @@ const player = {
   thunderSpell: 10,
   guarding: false,
   playerItems: [],
-  useItem() {
-    console.log(`${player.playerName} ate a delicious bagel...`)
-    console.log(`${this.playerName} gained back 10 hp!`)
-    this.playerHp += 10
-    enemyTurn()
-  },
   fireAttack(enemy) {
     if (player.mp > 25) {
       console.log(`${player.name} starts conjuring a fire spell!`)
@@ -155,4 +162,7 @@ attackBtn.addEventListener('click', () => {
 })
 guardBtn.addEventListener('click', () => {
   guard(player, slime)
+})
+itemBtn.addEventListener('click', () => {
+  useItem(player, slime)
 })
