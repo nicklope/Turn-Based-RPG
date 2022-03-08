@@ -25,6 +25,9 @@ const clearActionBar = (parent) => {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild)
   }
+  actionBar.style.display = 'flex'
+  actionBar.style.justifyContent = 'center'
+  actionBar.style.alignItems = 'center'
 }
 const randomRange = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min)
