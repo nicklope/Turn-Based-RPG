@@ -46,7 +46,9 @@ const attack = (attacker, attacked) => {
   clearActionBar(actionBar)
   actionBar.innerText = `${attacker.name} goes for the attack!`
   attacked.hp -= attacker.damage
-  console.log(`${attacked.name} took ${attacker.damage} points of damage!`)
+  setTimeout(function () {
+    actionBar.innerText = `${attacked.name} took ${attacker.damage} points of damage!`
+  }, 1000)
   enemyTurn(attacked)
 }
 // Obects + constructors
