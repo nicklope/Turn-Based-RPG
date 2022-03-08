@@ -15,6 +15,9 @@ guardBtn.className = 'action-btn'
 const itemBtn = document.createElement('div')
 itemBtn.id = 'item-btn'
 itemBtn.className = 'action-btn'
+let enemyAttackDeclarationTO = ''
+let firstEnemyAttackTO = ''
+let reappendTO = ''
 
 actionBar.appendChild(attackBtn)
 attackBtn.innerText = 'attack'
@@ -51,14 +54,15 @@ const randomRange = (min, max) => {
 
 const attack = (player, enemy) => {
   clearActionBar(actionBar)
-  player.damage = randomRange(100, 140)
+  player.damage = randomRange(7, 14)
   actionBar.innerText = `${player.name} goes for the attack!`
   enemy.hp -= player.damage
   setTimeout(function () {
     enemyDiv.style.animationName = 'blink'
     actionBar.innerText = `${enemy.name} took ${player.damage} points of damage!`
   }, 1250)
-
+  setTimeout(checkForWin, 2000)
+  setTimeout(checkForWin, 6000)
   enemyTurn(enemy)
 }
 const guard = (attacker, attacked) => {
@@ -78,25 +82,40 @@ const useItem = (attacker, attacked) => {
   enemyTurn(attacked)
 }
 const enemyTurn = (enemy) => {
-  enemy.damage = randomRange(7, 14)
-  setTimeout(function () {
+  enemy.damage = randomRange(100, 140)
+
+  enemyAttackDeclarationTO = setTimeout(function () {
     enemyDiv.style.animationName = 'still'
     actionBar.innerText = `${enemy.name} came out swinging!`
   }, 3000)
-  setTimeout(function () {
+
+  firstEnemyAttackTO = setTimeout(function () {
     if (player.guarding === false) {
       player.hp -= enemy.damage
       actionBar.style.animationName = 'shake'
       actionBar.innerText = `${player.name} took ${enemy.damage} points of damage!`
-      setTimeout(appendActionBar, 1500)
+      reappendTO = setTimeout(appendActionBar, 1500)
     } else {
       actionBar.innerText = `${enemy.name}'s attack bounced right off ${player.name}!`
       player.guarding = false
-      setTimeout(appendActionBar, 1500)
+      reappendTO = setTimeout(appendActionBar, 1500)
     }
   }, 5000)
 }
-
+const checkForWin = () => {
+  if (player.hp < 0) {
+    clearTimeout(reappendTO)
+    youLose()
+  } else if (enemy.hp < 0) {
+    clearTimeout(firstEnemyAttack)
+    clearTimeout(enemyAttackDeclaration)
+    youWin()
+  }
+}
+const youLose = () => {
+  clearActionBar(actionBar)
+  actionBar.innerText = 'GAME OVER'
+}
 const youWin = () => {
   clearActionBar(actionBar)
   actionBar.innerText = 'YOU WIN'
@@ -158,7 +177,7 @@ const player = {
   }
 }
 
-const slime = {
+const enemy = {
   name: 'Annoying Bug',
   hp: 100,
   mp: 100,
@@ -171,11 +190,11 @@ const slime = {
 // Event Listeners
 
 attackBtn.addEventListener('click', () => {
-  attack(player, slime)
+  attack(player, enemy)
 })
 guardBtn.addEventListener('click', () => {
-  guard(player, slime)
+  guard(player, enemy)
 })
 itemBtn.addEventListener('click', () => {
-  useItem(player, slime)
+  useItem(player, enemy)
 })
