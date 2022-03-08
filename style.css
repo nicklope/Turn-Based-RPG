@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+* {
+  font-family: 'Press Start 2P', cursive;
+}
+#game-view {
+  border: 1px solid black;
+  width: 1200px;
+  height: 800px;
+  display: flex;
+}
+#action-bar {
+  width: 1200px;
+  border-top: 1px solid black;
+  height: 200px;
+  align-self: flex-end;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+}
+.action-btn {
+  border: 1px solid black;
+}

@@ -1,4 +1,24 @@
 // Global Variables
+const gameView = document.getElementById('game-view')
+const actionBar = document.getElementById('action-bar')
+const attackBtn = document.createElement('div')
+
+attackBtn.id = 'attack-btn'
+attackBtn.className = 'action-btn'
+const magicBtn = document.createElement('div')
+magicBtn.id = 'magic-btn'
+magicBtn.className = 'action-btn'
+const guardBtn = document.createElement('div')
+guardBtn.id = 'guard-btn'
+guardBtn.className = 'action-btn'
+const itemBtn = document.createElement('div')
+itemBtn.id = 'item-btn'
+itemBtn.className = 'action-btn'
+
+actionBar.appendChild(attackBtn)
+actionBar.appendChild(magicBtn)
+actionBar.appendChild(guardBtn)
+actionBar.appendChild(itemBtn)
 
 // Functions
 
@@ -101,9 +121,6 @@ const slime = {
 
 // Event Listeners
 
-console.log(attack(player, slime))
-console.log(player.fireAttack(slime))
-console.log(player.thunderAttack(slime))
-console.log(attack(player, slime))
-console.log(attack(player, slime))
-console.log(attack(player, slime))
+attackBtn.addEventListener('click', () => {
+  attack(player, slime)
+})
