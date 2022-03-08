@@ -2,6 +2,7 @@
 const gameView = document.getElementById('game-view')
 const actionBar = document.getElementById('action-bar')
 const attackBtn = document.createElement('div')
+const enemyDiv = document.getElementById('enemy-div')
 
 attackBtn.id = 'attack-btn'
 attackBtn.className = 'action-btn'
@@ -52,6 +53,7 @@ const attack = (attacker, attacked) => {
   actionBar.innerText = `${attacker.name} goes for the attack!`
   attacked.hp -= attacker.damage
   setTimeout(function () {
+    enemyDiv.style.animationName = 'blink'
     actionBar.innerText = `${attacked.name} took ${attacker.damage} points of damage!`
   }, 1250)
   enemyTurn(attacked)
@@ -74,6 +76,7 @@ const useItem = (attacker, attacked) => {
 }
 const enemyTurn = (enemy) => {
   setTimeout(function () {
+    enemyDiv.style.animationName = ''
     actionBar.innerText = `${enemy.name} came out swinging!`
   }, 3000)
   setTimeout(function () {
@@ -146,7 +149,7 @@ const player = {
 }
 
 const slime = {
-  name: 'Slime',
+  name: 'Annoying Bug',
   hp: 100,
   mp: 100,
   damage: randomRange(7, 10),
