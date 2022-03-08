@@ -1,9 +1,9 @@
 // Global Variables
 const gameView = document.getElementById('game-view')
 const actionBar = document.getElementById('action-bar')
-const attackBtn = document.createElement('div')
 const enemyDiv = document.getElementById('enemy-div')
 
+const attackBtn = document.createElement('div')
 attackBtn.id = 'attack-btn'
 attackBtn.className = 'action-btn'
 const magicBtn = document.createElement('div')
@@ -15,6 +15,20 @@ guardBtn.className = 'action-btn'
 const itemBtn = document.createElement('div')
 itemBtn.id = 'item-btn'
 itemBtn.className = 'action-btn'
+
+const fireBtn = document.createElement('div')
+fireBtn.id = 'fire-btn'
+fireBtn.className = 'action-btn'
+const waterBtn = document.createElement('div')
+waterBtn.id = 'water-btn'
+waterBtn.className = 'action-btn'
+const airBtn = document.createElement('div')
+airBtn.id = 'air-btn'
+airBtn.className = 'action-btn'
+const earthBtn = document.createElement('div')
+earthBtn.id = 'earth-btn'
+earthBtn.className = 'action-btn'
+
 let enemyAttackDeclarationTO = ''
 let firstEnemyAttackTO = ''
 let reappendTO = ''
@@ -48,13 +62,27 @@ const appendActionBar = () => {
   actionBar.appendChild(guardBtn)
   actionBar.appendChild(itemBtn)
 }
+const appendMagicBar = () => {
+  clearActionBar(actionBar)
+  actionBar.style.display = 'grid'
+  actionBar.style.justifyContent = ''
+  actionBar.style.alignItems = ''
+  actionBar.appendChild(fireBtn)
+  fireBtn.innerText = 'fire'
+  actionBar.appendChild(waterBtn)
+  waterBtn.innerText = 'water'
+  actionBar.appendChild(airBtn)
+  airBtn.innerText = 'air'
+  actionBar.appendChild(earthBtn)
+  earthBtn.innerText = 'earth'
+}
 const randomRange = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min)
 }
 
 const attack = (player, enemy) => {
   clearActionBar(actionBar)
-  player.damage = randomRange(7, 14)
+  player.damage = randomRange(14, 28)
   actionBar.innerText = `${player.name} goes for the attack!`
   enemy.hp -= player.damage
   setTimeout(function () {
@@ -82,7 +110,7 @@ const useItem = (attacker, attacked) => {
   enemyTurn(attacked)
 }
 const enemyTurn = (enemy) => {
-  enemy.damage = randomRange(100, 140)
+  enemy.damage = randomRange(14, 28)
 
   enemyAttackDeclarationTO = setTimeout(function () {
     enemyDiv.style.animationName = 'still'
@@ -107,8 +135,8 @@ const checkForWin = () => {
     clearTimeout(reappendTO)
     youLose()
   } else if (enemy.hp < 0) {
-    clearTimeout(firstEnemyAttack)
-    clearTimeout(enemyAttackDeclaration)
+    clearTimeout(firstEnemyAttackTO)
+    clearTimeout(enemyAttackDeclarationTO)
     youWin()
   }
 }
@@ -197,4 +225,7 @@ guardBtn.addEventListener('click', () => {
 })
 itemBtn.addEventListener('click', () => {
   useItem(player, enemy)
+})
+magicBtn.addEventListener('click', () => {
+  appendMagicBar()
 })
