@@ -8,6 +8,11 @@
   height: 800px;
   display: flex;
 }
+#enemy-div {
+  position: absolute;
+  left: 34%;
+  top: 10%;
+}
 #action-bar {
   width: 1200px;
   border-top: 1px solid black;
