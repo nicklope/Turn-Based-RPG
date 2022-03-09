@@ -2,6 +2,7 @@
 const gameView = document.getElementById('game-view')
 const actionBar = document.getElementById('action-bar')
 const enemyDiv = document.getElementById('enemy-div')
+const playerDisplay = document.getElementById('player-display')
 
 const attackBtn = document.createElement('div')
 attackBtn.id = 'attack-btn'
@@ -126,6 +127,7 @@ const attack = (player, enemy) => {
       actionBar.innerText = `Oh no! ${player.name} missed!!`
       setTimeout(checkForWin, 2000)
       setTimeout(checkForWin, 6000)
+      playerDisplay.innerText = ` ${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     }, 1250)
   } else if (hitRating >= 9) {
@@ -137,6 +139,7 @@ const attack = (player, enemy) => {
       enemy.hp -= player.damage * 2
       setTimeout(checkForWin, 2000)
       setTimeout(checkForWin, 6000)
+      playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     }, 1000)
   } else {
@@ -146,6 +149,7 @@ const attack = (player, enemy) => {
       enemy.hp -= player.damage
       setTimeout(checkForWin, 2000)
       setTimeout(checkForWin, 6000)
+      playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     }, 1250)
   }
@@ -154,6 +158,7 @@ const guard = (attacker, attacked) => {
   clearActionBar(actionBar)
   actionBar.innerText = `${attacker.name} braced for an attack!`
   attacker.guarding = true
+  playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
   enemyTurn(attacked)
 }
 const useItem = (player, item, enemy) => {
@@ -167,6 +172,7 @@ const useItem = (player, item, enemy) => {
         actionBar.innerText = `${player.name} gained 50 hp!(${player.bagelCount} left)`
         setTimeout(checkForWin, 2000)
         setTimeout(checkForWin, 6000)
+        playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
         enemyTurn(enemy)
       }, 1750)
     } else if (player.bagelCount <= 0) {
@@ -184,6 +190,7 @@ const useItem = (player, item, enemy) => {
         actionBar.innerText = `${player.name} gained back 50 mp!(${player.coffeeCount} left)`
         setTimeout(checkForWin, 2000)
         setTimeout(checkForWin, 6000)
+        playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
         enemyTurn(enemy)
       }, 1750)
     } else if (player.coffeeCount <= 0) {
@@ -211,6 +218,7 @@ const fireAttack = (player, enemy) => {
       }, 1250)
 
       player.mp -= 25
+      playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     } else if (enemy.resistances.includes('fire')) {
       enemy.hp += player.fireSpell - 10
@@ -220,10 +228,12 @@ const fireAttack = (player, enemy) => {
         } gained ${player.firespell - 10} hp`
       }, 1250)
       player.mp -= 25
+      playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     }
   } else {
     actionBar.innerText = 'Not enough MP!'
+    playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
     enemyTurn(enemy)
   }
   setTimeout(checkForWin, 2000)
@@ -246,6 +256,7 @@ const waterAttack = (player, enemy) => {
       }, 1250)
 
       player.mp -= 25
+      playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     } else if (enemy.resistances.includes('water')) {
       enemy.hp += player.waterSpell - 10
@@ -253,10 +264,12 @@ const waterAttack = (player, enemy) => {
         actionBar.innerText = `Its no use! Water is only making it stronger!`
       }, 1250)
       player.mp -= 25
+      playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     }
   } else {
     actionBar.innerText = 'Not enough MP!'
+    playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
     enemyTurn(enemy)
   }
   setTimeout(checkForWin, 2000)
@@ -279,6 +292,7 @@ const airAttack = (player, enemy) => {
       }, 1250)
 
       player.mp -= 25
+      playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     } else if (enemy.resistances.includes('air')) {
       enemy.hp += player.airSpell - 10
@@ -286,6 +300,7 @@ const airAttack = (player, enemy) => {
         actionBar.innerText = `Its no use! Wind is only making it stronger!`
       }, 1250)
       player.mp -= 25
+      playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     }
   } else {
@@ -312,6 +327,7 @@ const earthAttack = (player, enemy) => {
       }, 1250)
 
       player.mp -= 25
+      playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     } else if (enemy.resistances.includes('earth')) {
       enemy.hp += player.earthSpell - 10
@@ -319,6 +335,7 @@ const earthAttack = (player, enemy) => {
         actionBar.innerText = `Its no use! The earthquake is only making it stronger!`
       }, 1250)
       player.mp -= 25
+      playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     }
   } else {
@@ -342,8 +359,9 @@ const enemyTurn = (enemy) => {
       if (hitRating <= 1) {
         actionBar.innerText = `Phew!!${enemy.name} whiffed the attack!`
         reappendTO = setTimeout(appendActionBar, 1500)
-      } else if (hitRating === 10) {
+      } else if (hitRating > 9) {
         player.hp -= enemy.damage * 1.5
+        playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
         actionBar.style.animationName = 'shake'
         actionBar.innerText = `OOOF! That hit hard! Took ${
           enemy.damage * 1.5
@@ -351,6 +369,7 @@ const enemyTurn = (enemy) => {
         reappendTO = setTimeout(appendActionBar, 1500)
       } else {
         player.hp -= enemy.damage
+        playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
         actionBar.style.animationName = 'shake'
         actionBar.innerText = `${player.name} took ${enemy.damage} points of damage!`
         reappendTO = setTimeout(appendActionBar, 1500)
@@ -397,6 +416,7 @@ const player = {
   niceCoffee: 50,
   coffeeCount: 2
 }
+playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
 
 const enemy = {
   name: 'Annoying Bug',

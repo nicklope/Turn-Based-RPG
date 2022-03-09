@@ -7,14 +7,35 @@
   width: 1200px;
   height: 800px;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 #enemy-div {
-  position: absolute;
-  left: 34%;
-  top: 10%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   opacity: 1;
   animation-name: still;
   animation-duration: 1s;
+}
+#screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 75%;
+  width: 100%;
+}
+#player-display {
+  justify-items: center;
+  align-items: center;
+  width: 120px;
+  height: 60px;
+  border: 3px dashed black;
+  padding: 10px;
+  line-height: 1.3;
 }
 @keyframes blink {
   0% {
@@ -55,9 +76,9 @@
   }
 }
 #action-bar {
-  width: 1200px;
+  width: 100%;
   border: 1px solid black;
-  height: 200px;
+  height: 25%;
   align-self: flex-end;
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
