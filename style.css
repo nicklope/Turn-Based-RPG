@@ -104,6 +104,12 @@
     transform: translateX(10px);
   }
 }
+@keyframes dodge {
+  40% {
+    transform: translateX(-120px);
+  }
+}
+
 .action-btn {
   border: 1px solid black;
   display: flex;

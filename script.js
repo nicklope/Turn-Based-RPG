@@ -93,7 +93,8 @@ const attack = (player, enemy) => {
 
   if (hitRating <= 1) {
     setTimeout(function () {
-      enemyDiv.style.animationName = ''
+      enemyDiv.style.animationName = 'dodge'
+
       actionBar.innerText = `Oh no! ${player.name} missed!!`
       setTimeout(checkForWin, 2000)
       setTimeout(checkForWin, 6000)
@@ -273,6 +274,7 @@ const earthAttack = (player, enemy) => {
 }
 const enemyTurn = (enemy) => {
   enemy.damage = randomRange(14, 28)
+  let hitRating = hitRate()
 
   enemyAttackDeclarationTO = setTimeout(function () {
     enemyDiv.style.animationName = 'still'
@@ -281,10 +283,22 @@ const enemyTurn = (enemy) => {
 
   firstEnemyAttackTO = setTimeout(function () {
     if (player.guarding === false) {
-      player.hp -= enemy.damage
-      actionBar.style.animationName = 'shake'
-      actionBar.innerText = `${player.name} took ${enemy.damage} points of damage!`
-      reappendTO = setTimeout(appendActionBar, 1500)
+      if (hitRating <= 1) {
+        actionBar.innerText = `Phew!!${enemy.name} whiffed the attack!`
+        reappendTO = setTimeout(appendActionBar, 1500)
+      } else if (hitRating === 10) {
+        player.hp -= enemy.damage * 1.5
+        actionBar.style.animationName = 'shake'
+        actionBar.innerText = `OOOF! That hit hard! Took ${
+          enemy.damage * 1.5
+        } points of damage!`
+        reappendTO = setTimeout(appendActionBar, 1500)
+      } else {
+        player.hp -= enemy.damage
+        actionBar.style.animationName = 'shake'
+        actionBar.innerText = `${player.name} took ${enemy.damage} points of damage!`
+        reappendTO = setTimeout(appendActionBar, 1500)
+      }
     } else {
       actionBar.innerText = `${enemy.name}'s attack bounced right off ${player.name}!`
       player.guarding = false
@@ -293,10 +307,10 @@ const enemyTurn = (enemy) => {
   }, 5000)
 }
 const checkForWin = () => {
-  if (player.hp < 0) {
+  if (player.hp <= 0) {
     clearTimeout(reappendTO)
     youLose()
-  } else if (enemy.hp < 0) {
+  } else if (enemy.hp <= 0) {
     clearTimeout(firstEnemyAttackTO)
     clearTimeout(enemyAttackDeclarationTO)
     youWin()
@@ -371,7 +385,7 @@ const player = {
 
 const enemy = {
   name: 'Annoying Bug',
-  hp: 100,
+  hp: 200,
   mp: 100,
   damage: '',
   weaknesses: ['fire', 'earth'],
