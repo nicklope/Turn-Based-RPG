@@ -3,6 +3,7 @@ const gameView = document.getElementById('game-view')
 const actionBar = document.getElementById('action-bar')
 const enemyDiv = document.getElementById('enemy-div')
 const playerDisplay = document.getElementById('player-display')
+const enemyImg = document.querySelector('img')
 
 const attackBtn = document.createElement('div')
 attackBtn.id = 'attack-btn'
@@ -462,4 +463,7 @@ coffeeBtn.addEventListener('click', () => {
 })
 goBackBtn.addEventListener('click', () => {
   appendActionBar()
+})
+enemyImg.addEventListener('click', () => {
+  console.log('clicked!')
 })

@@ -21,6 +21,9 @@
   animation-name: still;
   animation-duration: 1s;
 }
+img:hover {
+  cursor: zoom-in;
+}
 img {
   height: 250px;
   width: auto;
@@ -51,8 +54,9 @@ img {
     calc(var(--p) * -1) calc(var(--p) * 1),
     calc(var(--p) * 1) calc(var(--p) * -1),
     calc(var(--p) * -1) calc(var(--p) * 0);
-  animation: color var(--d) var(--e) infinite,
+  /* animation: color var(--d) var(--e) infinite,
     position var(--d) var(--e) infinite;
+ */
 }
 
 #player-display {
@@ -218,4 +222,10 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.action-btn:hover {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  transform: translateY(-10px);
 }
