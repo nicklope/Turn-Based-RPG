@@ -79,19 +79,47 @@ const appendMagicBar = () => {
 const randomRange = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min)
 }
+const hitRate = () => {
+  return Math.floor(Math.random() * 10)
+}
 
 const attack = (player, enemy) => {
   clearActionBar(actionBar)
+  let hitRating = hitRate()
   player.damage = randomRange(14, 28)
+  console.log(enemy.hp, player.hp)
+
   actionBar.innerText = `${player.name} goes for the attack!`
-  enemy.hp -= player.damage
-  setTimeout(function () {
-    enemyDiv.style.animationName = 'blink'
-    actionBar.innerText = `${enemy.name} took ${player.damage} points of damage!`
-  }, 1250)
-  setTimeout(checkForWin, 2000)
-  setTimeout(checkForWin, 6000)
-  enemyTurn(enemy)
+
+  if (hitRating <= 1) {
+    setTimeout(function () {
+      enemyDiv.style.animationName = ''
+      actionBar.innerText = `Oh no! ${player.name} missed!!`
+      setTimeout(checkForWin, 2000)
+      setTimeout(checkForWin, 6000)
+      enemyTurn(enemy)
+    }, 1250)
+  } else if (hitRating >= 9) {
+    setTimeout(function () {
+      enemyDiv.style.animationName = 'blink'
+      actionBar.innerText = `OOOOF!! ${enemy.name} took ${
+        player.damage * 2
+      } points of critical damage!`
+      enemy.hp -= player.damage * 2
+      setTimeout(checkForWin, 2000)
+      setTimeout(checkForWin, 6000)
+      enemyTurn(enemy)
+    }, 1000)
+  } else {
+    setTimeout(function () {
+      enemyDiv.style.animationName = 'blink'
+      actionBar.innerText = `${enemy.name} took ${player.damage} points of damage!`
+      enemy.hp -= player.damage
+      setTimeout(checkForWin, 2000)
+      setTimeout(checkForWin, 6000)
+      enemyTurn(enemy)
+    }, 1250)
+  }
 }
 const guard = (attacker, attacked) => {
   clearActionBar(actionBar)
