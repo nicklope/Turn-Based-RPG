@@ -181,7 +181,7 @@ const useItem = (player, item, enemy) => {
       player.mp += player.niceCoffee
       setTimeout(function () {
         player.coffeeCount--
-        actionBar.innerText = `${player.name} gained back 50 mp!(${coffeeCount})`
+        actionBar.innerText = `${player.name} gained back 50 mp!(${player.coffeeCount} left)`
         setTimeout(checkForWin, 2000)
         setTimeout(checkForWin, 6000)
         enemyTurn(enemy)
