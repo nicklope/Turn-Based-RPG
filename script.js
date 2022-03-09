@@ -133,7 +133,7 @@ const hitRate = () => {
 const attack = (player, enemy) => {
   clearActionBar(actionBar)
   let hitRating = hitRate()
-  player.damage = randomRange(14, 28)
+  player.damage = randomRange(18, 23)
   console.log(enemy.hp, player.hp)
 
   actionBar.innerText = `${player.name} goes for the attack!`
@@ -385,7 +385,7 @@ const earthAttack = (player, enemy) => {
   setTimeout(checkForWin, 6000)
 }
 const enemyTurn = (enemy) => {
-  enemy.damage = randomRange(14, 28)
+  enemy.damage = randomRange(20, 28)
   let hitRating = hitRate()
 
   enemyAttackDeclarationTO = setTimeout(function () {
@@ -395,7 +395,7 @@ const enemyTurn = (enemy) => {
 
   firstEnemyAttackTO = setTimeout(function () {
     if (player.guarding === false) {
-      if (hitRating <= 1) {
+      if (hitRating <= 2) {
         actionBar.innerText = `Phew!!${enemy.name} whiffed the attack!`
         reappendTO = setTimeout(appendActionBar, 1500)
       } else if (hitRating > 9) {
