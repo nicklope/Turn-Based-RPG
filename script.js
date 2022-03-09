@@ -87,15 +87,15 @@ const appendMagicBar = () => {
   actionBar.style.gridTemplateColumns = '20% 20% 20% 20% 20%'
   actionBar.style.alignItems = ''
   actionBar.appendChild(fireBtn)
-  fireBtn.innerText = 'fire'
+  fireBtn.innerText = 'fire (25mp)'
   actionBar.appendChild(waterBtn)
-  waterBtn.innerText = 'water'
+  waterBtn.innerText = 'water (25mp)'
   actionBar.appendChild(goBackBtn)
   goBackBtn.innerText = 'go back'
   actionBar.appendChild(airBtn)
-  airBtn.innerText = 'air'
+  airBtn.innerText = 'air (20mp)'
   actionBar.appendChild(earthBtn)
-  earthBtn.innerText = 'earth'
+  earthBtn.innerText = 'earth (20mp)'
 }
 const appendItemBar = () => {
   clearActionBar(actionBar)
@@ -205,7 +205,7 @@ const useItem = (player, item, enemy) => {
       player.mp += player.niceCoffee
       setTimeout(function () {
         player.coffeeCount--
-        actionBar.innerText = `${player.name} gained back 50 mp!(${player.coffeeCount} left)`
+        actionBar.innerText = `${player.name} gained back 30 mp!(${player.coffeeCount} left)`
         setTimeout(checkForWin, 2000)
         setTimeout(checkForWin, 6000)
         playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
@@ -228,7 +228,7 @@ const inspectEnemy = (enemy) => {
     actionBar.innerText = ` likes: ruining picnics AND programs`
   }, 2500)
   setTimeout(() => {
-    actionBar.innerText = `max hp: ${enemy.hp}`
+    actionBar.innerText = `max hp: 200`
   }, 4500)
   setTimeout(() => {
     actionBar.innerText = 'weaknesses: fire & ???'
@@ -243,7 +243,7 @@ const inspectEnemy = (enemy) => {
 const fireAttack = (player, enemy) => {
   clearActionBar(actionBar)
 
-  if (player.mp > 25) {
+  if (player.mp >= 25) {
     actionBar.innerText = `${player.name} starts conjuring a fire spell!`
 
     if (enemy.weaknesses.includes('fire')) {
@@ -281,7 +281,7 @@ const fireAttack = (player, enemy) => {
 const waterAttack = (player, enemy) => {
   clearActionBar(actionBar)
 
-  if (player.mp > 25) {
+  if (player.mp >= 25) {
     actionBar.innerText = `${player.name} shot a torrent of water!`
 
     if (enemy.weaknesses.includes('water')) {
@@ -317,7 +317,7 @@ const waterAttack = (player, enemy) => {
 const airAttack = (player, enemy) => {
   clearActionBar(actionBar)
 
-  if (player.mp > 25) {
+  if (player.mp >= 20) {
     actionBar.innerText = `${player.name} summoned a huge gust of wind!`
 
     if (enemy.weaknesses.includes('air')) {
@@ -330,7 +330,7 @@ const airAttack = (player, enemy) => {
         } points of damage!`
       }, 1250)
 
-      player.mp -= 25
+      player.mp -= 20
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     } else if (enemy.resistances.includes('air')) {
@@ -338,7 +338,7 @@ const airAttack = (player, enemy) => {
       setTimeout(function () {
         actionBar.innerText = `Its no use! Wind is only making it stronger!`
       }, 1250)
-      player.mp -= 25
+      player.mp -= 20
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     }
@@ -352,7 +352,7 @@ const airAttack = (player, enemy) => {
 const earthAttack = (player, enemy) => {
   clearActionBar(actionBar)
 
-  if (player.mp > 25) {
+  if (player.mp >= 20) {
     actionBar.innerText = `${player.name} caused a massive earthquake!`
 
     if (enemy.weaknesses.includes('earth')) {
@@ -365,7 +365,7 @@ const earthAttack = (player, enemy) => {
         } points of damage!`
       }, 1250)
 
-      player.mp -= 25
+      player.mp -= 20
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     } else if (enemy.resistances.includes('earth')) {
@@ -373,7 +373,7 @@ const earthAttack = (player, enemy) => {
       setTimeout(function () {
         actionBar.innerText = `Its no use! The earthquake is only making it stronger!`
       }, 1250)
-      player.mp -= 25
+      player.mp -= 20
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     }
@@ -447,12 +447,12 @@ const player = {
   damage: '',
   fireSpell: 20,
   waterSpell: 20,
-  airSpell: 20,
-  earthSpell: 20,
+  airSpell: 16,
+  earthSpell: 16,
   guarding: false,
   pizzaBagel: 50,
   bagelCount: 2,
-  niceCoffee: 50,
+  niceCoffee: 30,
   coffeeCount: 2
 }
 playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
