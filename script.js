@@ -36,6 +36,10 @@ const coffeeBtn = document.createElement('div')
 coffeeBtn.id = 'coffee-btn'
 coffeeBtn.className = 'action-btn'
 
+const goBackBtn = document.createElement('div')
+goBackBtn.id = 'goback-btn'
+goBackBtn.className = 'action-btn'
+
 let enemyAttackDeclarationTO = ''
 let firstEnemyAttackTO = ''
 let reappendTO = ''
@@ -62,6 +66,7 @@ const appendActionBar = () => {
   actionBar.style.animationName = 'still'
   actionBar.innerText = ''
   actionBar.style.display = 'grid'
+  actionBar.style.gridTemplateColumns = '25% 25% 25% 25%'
   actionBar.style.justifyContent = ''
   actionBar.style.alignItems = ''
   actionBar.appendChild(attackBtn)
@@ -73,11 +78,14 @@ const appendMagicBar = () => {
   clearActionBar(actionBar)
   actionBar.style.display = 'grid'
   actionBar.style.justifyContent = ''
+  actionBar.style.gridTemplateColumns = '20% 20% 20% 20% 20%'
   actionBar.style.alignItems = ''
   actionBar.appendChild(fireBtn)
   fireBtn.innerText = 'fire'
   actionBar.appendChild(waterBtn)
   waterBtn.innerText = 'water'
+  actionBar.appendChild(goBackBtn)
+  goBackBtn.innerText = 'go back'
   actionBar.appendChild(airBtn)
   airBtn.innerText = 'air'
   actionBar.appendChild(earthBtn)
@@ -86,10 +94,13 @@ const appendMagicBar = () => {
 const appendItemBar = () => {
   clearActionBar(actionBar)
   actionBar.style.display = 'grid'
+  actionBar.style.gridTemplateColumns = '33.33% 33.33% 33.33%'
   actionBar.style.justifyContent = ''
   actionBar.style.alignItems = ''
   actionBar.appendChild(pizzaBtn)
   pizzaBtn.innerText = 'pizza bagels'
+  actionBar.appendChild(goBackBtn)
+  goBackBtn.innerText = 'go back'
   actionBar.appendChild(coffeeBtn)
   coffeeBtn.innerText = `nice'd coffee`
 }
@@ -145,15 +156,27 @@ const guard = (attacker, attacked) => {
   attacker.guarding = true
   enemyTurn(attacked)
 }
-const useItem = (player, enemy) => {
+const useItem = (player, item, enemy) => {
   clearActionBar(actionBar)
-  actionBar.innerText = `${player.name} ate a delicious bagel...`
-  player.hp += 10
-  setTimeout(function () {
-    actionBar.innerText = `${player.name} gained back 10 hp!`
-  }, 1750)
-
-  enemyTurn(enemy)
+  if (item === 'bagel') {
+    actionBar.innerText = `${player.name} ate a delicious pizza bagel...`
+    player.hp += player.pizzaBagel
+    setTimeout(function () {
+      actionBar.innerText = `${player.name} gained 50 hp!`
+      setTimeout(checkForWin, 2000)
+      setTimeout(checkForWin, 6000)
+      enemyTurn(enemy)
+    }, 1750)
+  } else if (item === 'coffee') {
+    actionBar.innerText = `${player.name} guzzled down a nice'd coffee!`
+    player.mp += player.niceCoffee
+    setTimeout(function () {
+      actionBar.innerText = `${player.name} gained back 50 mp!`
+      setTimeout(checkForWin, 2000)
+      setTimeout(checkForWin, 6000)
+      enemyTurn(enemy)
+    }, 1750)
+  }
 }
 const fireAttack = (player, enemy) => {
   clearActionBar(actionBar)
@@ -353,51 +376,8 @@ const player = {
   airSpell: 20,
   earthSpell: 20,
   guarding: false,
-  playerItems: [],
-  fireAttack(player, enemy) {
-    if (player.mp > 25) {
-      console.log(`${player.name} starts conjuring a fire spell!`)
-      if (enemy.weaknesses.includes('fire')) {
-        enemy.hp -= player.fireSpell * 1.5
-        console.log(`Its highly effective!`)
-        console.log(
-          `${enemy.name} took ${player.fireSpell * 1.5} points of damage!`
-        )
-        player.mp -= 25
-        enemyTurn(enemy)
-      } else if (enemy.resistances.includes('fire')) {
-        enemy.hp += player.fireSpell
-        console.log(`Ah! Its no use! Fire is only making it stronger!`)
-        player.mp -= 25
-        enemyTurn(enemy)
-      }
-    } else {
-      console.log('Not enough MP!')
-      enemyTurn(enemy)
-    }
-  },
-  thunderAttack(enemy) {
-    if (player.mp > 25) {
-      console.log(`${player.name} starts conjuring a thunder spell!`)
-      if (enemy.weaknesses.includes('thunder')) {
-        enemy.hp -= player.thunderSpell * 1.5
-        console.log(`Its highly effective!`)
-        console.log(
-          `${enemy.name} took ${player.thunderSpell * 1.5} points of damage!`
-        )
-        player.mp -= 25
-        enemyTurn(enemy)
-      } else if (enemy.resistances.includes('thunder')) {
-        enemy.hp += player.thunderSpell - 5
-        console.log(`Ah! Its no use! Thunder is only making it stronger!`)
-        player.mp -= 25
-        enemyTurn(enemy)
-      }
-    } else {
-      console.log('Not enough MP!')
-      enemyTurn(enemy)
-    }
-  }
+  pizzaBagel: 50,
+  niceCoffee: 50
 }
 
 const enemy = {
@@ -435,4 +415,13 @@ airBtn.addEventListener('click', () => {
 })
 earthBtn.addEventListener('click', () => {
   earthAttack(player, enemy)
+})
+pizzaBtn.addEventListener('click', () => {
+  useItem(player, 'bagel', enemy)
+})
+coffeeBtn.addEventListener('click', () => {
+  useItem(player, 'coffee', enemy)
+})
+goBackBtn.addEventListener('click', () => {
+  appendActionBar()
 })
