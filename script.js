@@ -159,23 +159,39 @@ const guard = (attacker, attacked) => {
 const useItem = (player, item, enemy) => {
   clearActionBar(actionBar)
   if (item === 'bagel') {
-    actionBar.innerText = `${player.name} ate a delicious pizza bagel...`
-    player.hp += player.pizzaBagel
-    setTimeout(function () {
-      actionBar.innerText = `${player.name} gained 50 hp!`
-      setTimeout(checkForWin, 2000)
-      setTimeout(checkForWin, 6000)
-      enemyTurn(enemy)
-    }, 1750)
+    if (player.bagelCount > 0) {
+      actionBar.innerText = `${player.name} ate a delicious pizza bagel...`
+      player.hp += player.pizzaBagel
+      setTimeout(function () {
+        player.bagelCount--
+        actionBar.innerText = `${player.name} gained 50 hp!(${player.bagelCount} left)`
+        setTimeout(checkForWin, 2000)
+        setTimeout(checkForWin, 6000)
+        enemyTurn(enemy)
+      }, 1750)
+    } else if (player.bagelCount <= 0) {
+      actionBar.innerText = 'You dont have anymore pizza bagels!'
+      setTimeout(function () {
+        appendItemBar()
+      }, 1750)
+    }
   } else if (item === 'coffee') {
-    actionBar.innerText = `${player.name} guzzled down a nice'd coffee!`
-    player.mp += player.niceCoffee
-    setTimeout(function () {
-      actionBar.innerText = `${player.name} gained back 50 mp!`
-      setTimeout(checkForWin, 2000)
-      setTimeout(checkForWin, 6000)
-      enemyTurn(enemy)
-    }, 1750)
+    if (player.coffeeCount > 0) {
+      actionBar.innerText = `${player.name} guzzled down a nice'd coffee!`
+      player.mp += player.niceCoffee
+      setTimeout(function () {
+        player.coffeeCount--
+        actionBar.innerText = `${player.name} gained back 50 mp!(${coffeeCount})`
+        setTimeout(checkForWin, 2000)
+        setTimeout(checkForWin, 6000)
+        enemyTurn(enemy)
+      }, 1750)
+    } else if (player.coffeeCount <= 0) {
+      actionBar.innerText = `You dont have anymore nice'd coffee!`
+      setTimeout(function () {
+        appendItemBar()
+      }, 1750)
+    }
   }
 }
 const fireAttack = (player, enemy) => {
@@ -377,7 +393,9 @@ const player = {
   earthSpell: 20,
   guarding: false,
   pizzaBagel: 50,
-  niceCoffee: 50
+  bagelCount: 3,
+  niceCoffee: 50,
+  coffeeCount: 2
 }
 
 const enemy = {
