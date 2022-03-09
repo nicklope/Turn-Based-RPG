@@ -38,6 +38,10 @@ const coffeeBtn = document.createElement('div')
 coffeeBtn.id = 'coffee-btn'
 coffeeBtn.className = 'action-btn'
 
+const inspectBtn = document.createElement('div')
+inspectBtn.id = 'inspect-btn'
+inspectBtn.className = 'action-btn'
+
 const goBackBtn = document.createElement('div')
 goBackBtn.id = 'goback-btn'
 goBackBtn.className = 'action-btn'
@@ -105,6 +109,19 @@ const appendItemBar = () => {
   goBackBtn.innerText = 'go back'
   actionBar.appendChild(coffeeBtn)
   coffeeBtn.innerText = `nice'd coffee`
+}
+const appendInspectBar = () => {
+  if (actionBar.innerHTML.includes('items')) {
+    clearActionBar(actionBar)
+    actionBar.style.display = 'grid'
+    actionBar.style.gridTemplateColumns = '50% 50%'
+    actionBar.style.justifyContent = ''
+    actionBar.style.alignItems = ''
+    actionBar.appendChild(inspectBtn)
+    inspectBtn.innerText = 'inspect enemy? (10mp)'
+    actionBar.appendChild(goBackBtn)
+    goBackBtn.innerText = 'go back'
+  }
 }
 const randomRange = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min)
@@ -201,6 +218,27 @@ const useItem = (player, item, enemy) => {
       }, 1750)
     }
   }
+}
+const inspectEnemy = (enemy) => {
+  clearActionBar(actionBar)
+  player.mp -= 10
+  playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
+  actionBar.innerText = `name: ${enemy.name}`
+  setTimeout(() => {
+    actionBar.innerText = ` likes: ruining picnics AND programs`
+  }, 2500)
+  setTimeout(() => {
+    actionBar.innerText = `max hp: ${enemy.hp}`
+  }, 4500)
+  setTimeout(() => {
+    actionBar.innerText = 'weaknesses: fire & ???'
+  }, 6500)
+  setTimeout(() => {
+    actionBar.innerText = 'resistances: water & ???'
+  }, 8500)
+  setTimeout(() => {
+    appendActionBar()
+  }, 10500)
 }
 const fireAttack = (player, enemy) => {
   clearActionBar(actionBar)
@@ -413,7 +451,7 @@ const player = {
   earthSpell: 20,
   guarding: false,
   pizzaBagel: 50,
-  bagelCount: 3,
+  bagelCount: 2,
   niceCoffee: 50,
   coffeeCount: 2
 }
@@ -465,5 +503,8 @@ goBackBtn.addEventListener('click', () => {
   appendActionBar()
 })
 enemyImg.addEventListener('click', () => {
-  console.log('clicked!')
+  appendInspectBar()
+})
+inspectBtn.addEventListener('click', () => {
+  inspectEnemy(enemy)
 })
