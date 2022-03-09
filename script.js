@@ -29,6 +29,13 @@ const earthBtn = document.createElement('div')
 earthBtn.id = 'earth-btn'
 earthBtn.className = 'action-btn'
 
+const pizzaBtn = document.createElement('div')
+pizzaBtn.id = 'pizza-btn'
+pizzaBtn.className = 'action-btn'
+const coffeeBtn = document.createElement('div')
+coffeeBtn.id = 'coffee-btn'
+coffeeBtn.className = 'action-btn'
+
 let enemyAttackDeclarationTO = ''
 let firstEnemyAttackTO = ''
 let reappendTO = ''
@@ -75,6 +82,16 @@ const appendMagicBar = () => {
   airBtn.innerText = 'air'
   actionBar.appendChild(earthBtn)
   earthBtn.innerText = 'earth'
+}
+const appendItemBar = () => {
+  clearActionBar(actionBar)
+  actionBar.style.display = 'grid'
+  actionBar.style.justifyContent = ''
+  actionBar.style.alignItems = ''
+  actionBar.appendChild(pizzaBtn)
+  pizzaBtn.innerText = 'pizza bagels'
+  actionBar.appendChild(coffeeBtn)
+  coffeeBtn.innerText = `nice'd coffee`
 }
 const randomRange = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min)
@@ -402,7 +419,7 @@ guardBtn.addEventListener('click', () => {
   guard(player, enemy)
 })
 itemBtn.addEventListener('click', () => {
-  useItem(player, enemy)
+  appendItemBar()
 })
 magicBtn.addEventListener('click', () => {
   appendMagicBar()
