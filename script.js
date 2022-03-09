@@ -99,15 +99,149 @@ const guard = (attacker, attacked) => {
   attacker.guarding = true
   enemyTurn(attacked)
 }
-const useItem = (attacker, attacked) => {
+const useItem = (player, enemy) => {
   clearActionBar(actionBar)
-  actionBar.innerText = `${attacker.name} ate a delicious bagel...`
-  attacker.hp += 10
+  actionBar.innerText = `${player.name} ate a delicious bagel...`
+  player.hp += 10
   setTimeout(function () {
-    actionBar.innerText = `${attacker.name} gained back 10 hp!`
+    actionBar.innerText = `${player.name} gained back 10 hp!`
   }, 1750)
 
-  enemyTurn(attacked)
+  enemyTurn(enemy)
+}
+const fireAttack = (player, enemy) => {
+  clearActionBar(actionBar)
+
+  if (player.mp > 25) {
+    actionBar.innerText = `${player.name} starts conjuring a fire spell!`
+
+    if (enemy.weaknesses.includes('fire')) {
+      enemy.hp -= player.fireSpell * 1.5
+
+      setTimeout(function () {
+        enemyDiv.style.animationName = 'blink'
+        actionBar.innerText = `OOOF! ${enemy.name} took ${
+          player.fireSpell * 1.5
+        } points of damage!`
+      }, 1250)
+
+      player.mp -= 25
+      enemyTurn(enemy)
+    } else if (enemy.resistances.includes('fire')) {
+      enemy.hp += player.fireSpell - 10
+      setTimeout(function () {
+        actionBar.innerText = `Its no use! Fire is only making it stronger! ${
+          enemy.name
+        } gained ${player.firespell - 10} hp`
+      }, 1250)
+      player.mp -= 25
+      enemyTurn(enemy)
+    }
+  } else {
+    actionBar.innerText = 'Not enough MP!'
+    enemyTurn(enemy)
+  }
+  setTimeout(checkForWin, 2000)
+  setTimeout(checkForWin, 6000)
+}
+const waterAttack = (player, enemy) => {
+  clearActionBar(actionBar)
+
+  if (player.mp > 25) {
+    actionBar.innerText = `${player.name} shot a torrent of water!`
+
+    if (enemy.weaknesses.includes('water')) {
+      enemy.hp -= player.waterSpell * 1.5
+
+      setTimeout(function () {
+        enemyDiv.style.animationName = 'blink'
+        actionBar.innerText = `OOOF! ${enemy.name} took ${
+          player.waterSpell * 1.5
+        } points of damage!`
+      }, 1250)
+
+      player.mp -= 25
+      enemyTurn(enemy)
+    } else if (enemy.resistances.includes('water')) {
+      enemy.hp += player.waterSpell - 10
+      setTimeout(function () {
+        actionBar.innerText = `Its no use! Water is only making it stronger!`
+      }, 1250)
+      player.mp -= 25
+      enemyTurn(enemy)
+    }
+  } else {
+    actionBar.innerText = 'Not enough MP!'
+    enemyTurn(enemy)
+  }
+  setTimeout(checkForWin, 2000)
+  setTimeout(checkForWin, 6000)
+}
+const airAttack = (player, enemy) => {
+  clearActionBar(actionBar)
+
+  if (player.mp > 25) {
+    actionBar.innerText = `${player.name} summoned a huge gust of wind!`
+
+    if (enemy.weaknesses.includes('air')) {
+      enemy.hp -= player.airSpell * 1.5
+
+      setTimeout(function () {
+        enemyDiv.style.animationName = 'blink'
+        actionBar.innerText = `OOOF! ${enemy.name} took ${
+          player.airSpell * 1.5
+        } points of damage!`
+      }, 1250)
+
+      player.mp -= 25
+      enemyTurn(enemy)
+    } else if (enemy.resistances.includes('air')) {
+      enemy.hp += player.airSpell - 10
+      setTimeout(function () {
+        actionBar.innerText = `Its no use! Wind is only making it stronger!`
+      }, 1250)
+      player.mp -= 25
+      enemyTurn(enemy)
+    }
+  } else {
+    actionBar.innerText = 'Not enough MP!'
+    enemyTurn(enemy)
+  }
+  setTimeout(checkForWin, 2000)
+  setTimeout(checkForWin, 6000)
+}
+const earthAttack = (player, enemy) => {
+  clearActionBar(actionBar)
+
+  if (player.mp > 25) {
+    actionBar.innerText = `${player.name} caused a massive earthquake!`
+
+    if (enemy.weaknesses.includes('earth')) {
+      enemy.hp -= player.earthSpell * 1.5
+
+      setTimeout(function () {
+        enemyDiv.style.animationName = 'blink'
+        actionBar.innerText = `OOOF! ${enemy.name} took ${
+          player.earthSpell * 1.5
+        } points of damage!`
+      }, 1250)
+
+      player.mp -= 25
+      enemyTurn(enemy)
+    } else if (enemy.resistances.includes('earth')) {
+      enemy.hp += player.earthSpell - 10
+      setTimeout(function () {
+        actionBar.innerText = `Its no use! The earthquake is only making it stronger!`
+      }, 1250)
+      player.mp -= 25
+      enemyTurn(enemy)
+    }
+  } else {
+    actionBar.innerText = 'Not enough MP!'
+    enemyTurn(enemy)
+  }
+  setTimeout(checkForWin, 2000)
+  setTimeout(checkForWin, 6000)
 }
 const enemyTurn = (enemy) => {
   enemy.damage = randomRange(14, 28)
@@ -155,11 +289,13 @@ const player = {
   hp: 100,
   mp: 100,
   damage: '',
-  fireSpell: 10,
-  thunderSpell: 10,
+  fireSpell: 20,
+  waterSpell: 20,
+  airSpell: 20,
+  earthSpell: 20,
   guarding: false,
   playerItems: [],
-  fireAttack(enemy) {
+  fireAttack(player, enemy) {
     if (player.mp > 25) {
       console.log(`${player.name} starts conjuring a fire spell!`)
       if (enemy.weaknesses.includes('fire')) {
@@ -210,8 +346,8 @@ const enemy = {
   hp: 100,
   mp: 100,
   damage: '',
-  weaknesses: ['fire'],
-  resistances: ['thunder'],
+  weaknesses: ['fire', 'earth'],
+  resistances: ['water', 'air'],
   enemyPhrases: []
 }
 
@@ -228,4 +364,16 @@ itemBtn.addEventListener('click', () => {
 })
 magicBtn.addEventListener('click', () => {
   appendMagicBar()
+})
+fireBtn.addEventListener('click', () => {
+  fireAttack(player, enemy)
+})
+waterBtn.addEventListener('click', () => {
+  waterAttack(player, enemy)
+})
+airBtn.addEventListener('click', () => {
+  airAttack(player, enemy)
+})
+earthBtn.addEventListener('click', () => {
+  earthAttack(player, enemy)
 })
