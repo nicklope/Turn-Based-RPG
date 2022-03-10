@@ -623,6 +623,7 @@ searchButton.addEventListener('click', () => {
     actionBar.innerText = 'Bug Found!'
   }, 10000)
   setTimeout(() => {
+    playerDisplay.style.opacity = 1
     appendActionBar()
     fightMusic.play()
   }, 11000)
