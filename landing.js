@@ -36,4 +36,13 @@ submitName.addEventListener('click', () => {
   startSound.play()
   nameForm.remove()
   instructions.innerText = `Ohoho! An AI program with a name? ${nameInput.value}!  How anomalous! :)`
+  setTimeout(() => {
+    instructions.innerText = `${nameInput.value}...`
+  }, 4000)
+  setTimeout(() => {
+    instructions.innerText = `I created you for one purpose...`
+  }, 7000)
+  setTimeout(() => {
+    instructions.innerText = `to DESTROY BUGS`
+  }, 10000)
 })

@@ -25,5 +25,9 @@ h1 {
 }
 #submit-btn {
   background-color: white;
-  text-align: center;
+  left: 10px;
+  margin-left: 4px;
+  margin-top: 8px;
+  border-style: none;
+  cursor: pointer;
 }
