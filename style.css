@@ -32,6 +32,7 @@ img {
   height: 250px;
   width: auto;
   animation-name: still;
+  opacity: 0;
 }
 
 #screen {
@@ -60,8 +61,7 @@ img {
     calc(var(--p) * -1) calc(var(--p) * 1),
     calc(var(--p) * 1) calc(var(--p) * -1),
     calc(var(--p) * -1) calc(var(--p) * 0);
-  animation: color var(--d) var(--e) infinite,
-    position var(--d) var(--e) infinite;
+  animation: still;
 }
 
 #player-display {
@@ -74,6 +74,7 @@ img {
   line-height: 1.3;
   background-color: black;
   color: white;
+  opacity: 0;
 }
 
 #action-bar {
@@ -85,10 +86,25 @@ img {
   grid-template-columns: 25% 25% 25% 25%;
   text-align: center;
   font-size: 40px;
+  line-height: 1.3;
   animation-name: still;
   animation-duration: 1s;
   background-color: black;
   color: white;
+}
+#search-btn {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#search-btn:hover {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  transform: translateY(-10px);
+  cursor: pointer;
 }
 
 .action-btn {
@@ -104,6 +120,7 @@ img {
   color: black;
   border: 2px solid black;
   transform: translateY(-10px);
+  cursor: pointer;
 }
 @keyframes fire {
   0% {
@@ -287,7 +304,7 @@ img {
     transform: translateX(-120px);
   }
 }
-/* @keyframes color {
+@keyframes color {
   0%,
   25% {
     --bg: var(--c3);
@@ -337,4 +354,4 @@ img {
       calc(var(--p) * 5) calc(var(--p) * 15),
       calc(var(--p) * -5) calc(var(--p) * 16);
   }
-} */
+}

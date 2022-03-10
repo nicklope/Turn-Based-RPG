@@ -4,19 +4,24 @@ const actionBar = document.getElementById('action-bar')
 const enemyDiv = document.getElementById('enemy-div')
 const playerDisplay = document.getElementById('player-display')
 const enemyImg = document.querySelector('img')
+const screen = document.getElementById('screen')
 
 const attackBtn = document.createElement('div')
 attackBtn.id = 'attack-btn'
 attackBtn.className = 'action-btn'
+attackBtn.innerText = 'attack'
 const magicBtn = document.createElement('div')
 magicBtn.id = 'magic-btn'
 magicBtn.className = 'action-btn'
+magicBtn.innerText = 'magic'
 const guardBtn = document.createElement('div')
 guardBtn.id = 'guard-btn'
 guardBtn.className = 'action-btn'
+guardBtn.innerText = 'guard'
 const itemBtn = document.createElement('div')
 itemBtn.id = 'item-btn'
 itemBtn.className = 'action-btn'
+itemBtn.innerText = 'items'
 
 const fireBtn = document.createElement('div')
 fireBtn.id = 'fire-btn'
@@ -49,16 +54,15 @@ goBackBtn.className = 'action-btn'
 let enemyAttackDeclarationTO = ''
 let firstEnemyAttackTO = ''
 let reappendTO = ''
-// setTimeout(() => {
-actionBar.appendChild(attackBtn)
-attackBtn.innerText = 'attack'
-actionBar.appendChild(magicBtn)
-magicBtn.innerText = 'magic'
-actionBar.appendChild(guardBtn)
-guardBtn.innerText = 'guard'
-actionBar.appendChild(itemBtn)
-itemBtn.innerText = 'items'
-// }, 3000)
+
+// Game Start
+const searchButton = document.createElement('div')
+searchButton.id = 'search-btn'
+searchButton.innerText = 'Search for bugs?'
+actionBar.appendChild(searchButton)
+actionBar.style.display = 'flex'
+actionBar.style.justifyContent = 'center'
+actionBar.style.alignItems = 'center'
 
 // Functions
 const clearActionBar = (parent) => {
@@ -179,6 +183,7 @@ const attack = (player, enemy) => {
 }
 const guard = (attacker, attacked) => {
   clearActionBar(actionBar)
+  playerTurnSound.play()
   actionBar.innerText = `${attacker.name} braced for an attack!`
   attacker.guarding = true
   playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
@@ -452,6 +457,7 @@ const enemyTurn = (enemy) => {
         reappendTO = setTimeout(appendActionBar, 4500)
       }
     } else {
+      guardSound.play()
       actionBar.innerText = `${enemy.name}'s attack bounced right off ${player.name}!`
       player.guarding = false
       reappendTO = setTimeout(appendActionBar, 1500)
@@ -537,6 +543,7 @@ const fireSound = new Audio('fire1.wav')
 const waterSound = new Audio('beam.wav')
 const airSound = new Audio('breath.wav')
 const earthSound = new Audio('thunder2.wav')
+const guardSound = new Audio('tcrash.wav')
 
 // Event Listeners
 
@@ -580,4 +587,47 @@ enemyImg.addEventListener('click', () => {
 })
 inspectBtn.addEventListener('click', () => {
   inspectEnemy(enemy)
+})
+searchButton.addEventListener('click', () => {
+  searchButton.remove()
+  actionBar.innerText = 'Searching'
+  setTimeout(() => {
+    actionBar.innerText = 'Searching.'
+  }, 1000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching..'
+  }, 2000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching...'
+  }, 3000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching.'
+  }, 4000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching..'
+  }, 5000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching...'
+  }, 6000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching.'
+  }, 7000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching..'
+  }, 8000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching...'
+  }, 9000)
+  setTimeout(() => {
+    enemyImg.style.opacity = 1
+    actionBar.innerText = 'Bug Found!'
+  }, 10000)
+  setTimeout(() => {
+    appendActionBar()
+    fightMusic.play()
+  }, 11000)
+  setTimeout(() => {
+    screen.style.animation =
+      'color var(--d) var(--e) infinite, position var(--d) var(--e) infinite'
+  }, 20500)
 })
