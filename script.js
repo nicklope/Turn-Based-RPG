@@ -135,11 +135,13 @@ const attack = (player, enemy) => {
   let hitRating = hitRate()
   player.damage = randomRange(18, 23)
   console.log(enemy.hp, player.hp)
-
+  playerTurnSound.play()
   actionBar.innerText = `${player.name} goes for the attack!`
 
   if (hitRating <= 1) {
     setTimeout(function () {
+      missSound.play()
+
       enemyDiv.style.animationName = 'dodge'
 
       actionBar.innerText = `Oh no! ${player.name} missed!!`
@@ -150,6 +152,7 @@ const attack = (player, enemy) => {
     }, 1250)
   } else if (hitRating >= 9) {
     setTimeout(function () {
+      critSound.play()
       enemyDiv.style.animationName = 'blink'
       actionBar.innerText = `OOOOF!! ${enemy.name} took ${
         player.damage * 2
@@ -162,6 +165,7 @@ const attack = (player, enemy) => {
     }, 1000)
   } else {
     setTimeout(function () {
+      attackSound.play()
       enemyDiv.style.animationName = 'blink'
       actionBar.innerText = `${enemy.name} took ${player.damage} points of damage!`
       enemy.hp -= player.damage
@@ -183,9 +187,11 @@ const useItem = (player, item, enemy) => {
   clearActionBar(actionBar)
   if (item === 'bagel') {
     if (player.bagelCount > 0) {
+      eatSound.play()
       actionBar.innerText = `${player.name} ate a delicious pizza bagel...`
       player.hp += player.pizzaBagel
       setTimeout(function () {
+        statUpSound.play()
         player.bagelCount--
         actionBar.innerText = `${player.name} gained 50 hp!(${player.bagelCount} left)`
         setTimeout(checkForWin, 2000)
@@ -194,6 +200,7 @@ const useItem = (player, item, enemy) => {
         enemyTurn(enemy)
       }, 1750)
     } else if (player.bagelCount <= 0) {
+      errorSound.play()
       actionBar.innerText = 'You dont have anymore pizza bagels!'
       setTimeout(function () {
         appendItemBar()
@@ -201,9 +208,11 @@ const useItem = (player, item, enemy) => {
     }
   } else if (item === 'coffee') {
     if (player.coffeeCount > 0) {
+      drinkSound.play()
       actionBar.innerText = `${player.name} guzzled down a nice'd coffee!`
       player.mp += player.niceCoffee
       setTimeout(function () {
+        statUpSound.play()
         player.coffeeCount--
         actionBar.innerText = `${player.name} gained back 30 mp!(${player.coffeeCount} left)`
         setTimeout(checkForWin, 2000)
@@ -212,6 +221,7 @@ const useItem = (player, item, enemy) => {
         enemyTurn(enemy)
       }, 1750)
     } else if (player.coffeeCount <= 0) {
+      errorSound.play()
       actionBar.innerText = `You dont have anymore nice'd coffee!`
       setTimeout(function () {
         appendItemBar()
@@ -221,6 +231,7 @@ const useItem = (player, item, enemy) => {
 }
 const inspectEnemy = (enemy) => {
   clearActionBar(actionBar)
+  inspectSound.play()
   player.mp -= 10
   playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
   actionBar.innerText = `name: ${enemy.name}`
@@ -244,6 +255,7 @@ const fireAttack = (player, enemy) => {
   clearActionBar(actionBar)
 
   if (player.mp >= 25) {
+    magicSound.play()
     actionBar.innerText = `${player.name} starts conjuring a fire spell!`
 
     if (enemy.weaknesses.includes('fire')) {
@@ -271,6 +283,7 @@ const fireAttack = (player, enemy) => {
       enemyTurn(enemy)
     }
   } else {
+    errorSound.play()
     actionBar.innerText = 'Not enough MP!'
     playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
     enemyTurn(enemy)
@@ -282,6 +295,7 @@ const waterAttack = (player, enemy) => {
   clearActionBar(actionBar)
 
   if (player.mp >= 25) {
+    magicSound.play()
     actionBar.innerText = `${player.name} shot a torrent of water!`
 
     if (enemy.weaknesses.includes('water')) {
@@ -307,6 +321,7 @@ const waterAttack = (player, enemy) => {
       enemyTurn(enemy)
     }
   } else {
+    errorSound.play()
     actionBar.innerText = 'Not enough MP!'
     playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
     enemyTurn(enemy)
@@ -318,6 +333,7 @@ const airAttack = (player, enemy) => {
   clearActionBar(actionBar)
 
   if (player.mp >= 20) {
+    magicSound.play()
     actionBar.innerText = `${player.name} summoned a huge gust of wind!`
 
     if (enemy.weaknesses.includes('air')) {
@@ -343,6 +359,7 @@ const airAttack = (player, enemy) => {
       enemyTurn(enemy)
     }
   } else {
+    errorSound.play()
     actionBar.innerText = 'Not enough MP!'
     enemyTurn(enemy)
   }
@@ -353,6 +370,7 @@ const earthAttack = (player, enemy) => {
   clearActionBar(actionBar)
 
   if (player.mp >= 20) {
+    magicSound.play()
     actionBar.innerText = `${player.name} caused a massive earthquake!`
 
     if (enemy.weaknesses.includes('earth')) {
@@ -378,6 +396,7 @@ const earthAttack = (player, enemy) => {
       enemyTurn(enemy)
     }
   } else {
+    errorSound.play()
     actionBar.innerText = 'Not enough MP!'
     enemyTurn(enemy)
   }
@@ -387,8 +406,10 @@ const earthAttack = (player, enemy) => {
 const enemyTurn = (enemy) => {
   enemy.damage = randomRange(20, 28)
   let hitRating = hitRate()
+  let i = Math.floor(Math.random() * 13)
 
   enemyAttackDeclarationTO = setTimeout(function () {
+    enemyTurnSound.play()
     enemyDiv.style.animationName = 'still'
     actionBar.innerText = `${enemy.name} came out swinging!`
   }, 3000)
@@ -396,22 +417,34 @@ const enemyTurn = (enemy) => {
   firstEnemyAttackTO = setTimeout(function () {
     if (player.guarding === false) {
       if (hitRating <= 2) {
-        actionBar.innerText = `Phew!!${enemy.name} whiffed the attack!`
-        reappendTO = setTimeout(appendActionBar, 1500)
+        missSound.play()
+        actionBar.innerText = `Phew! ${enemy.name} missed!`
+        enemyPhraseTO = setTimeout(() => {
+          actionBar.innerText = `${enemy.enemyPhrases[i]}`
+        }, 2600)
+        reappendTO = setTimeout(appendActionBar, 4500)
       } else if (hitRating > 9) {
+        critSound.play()
         player.hp -= enemy.damage * 1.5
         playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
         actionBar.style.animationName = 'shake'
         actionBar.innerText = `OOOF! That hit hard! Took ${
           enemy.damage * 1.5
         } points of damage!`
-        reappendTO = setTimeout(appendActionBar, 1500)
+        enemyPhraseTO = setTimeout(() => {
+          actionBar.innerText = `${enemy.enemyPhrases[i]}`
+        }, 2500)
+        reappendTO = setTimeout(appendActionBar, 4500)
       } else {
+        attackSound.play()
         player.hp -= enemy.damage
         playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
         actionBar.style.animationName = 'shake'
         actionBar.innerText = `${player.name} took ${enemy.damage} points of damage!`
-        reappendTO = setTimeout(appendActionBar, 1500)
+        enemyPhraseTO = setTimeout(() => {
+          actionBar.innerText = `${enemy.enemyPhrases[i]}`
+        }, 2500)
+        reappendTO = setTimeout(appendActionBar, 4500)
       }
     } else {
       actionBar.innerText = `${enemy.name}'s attack bounced right off ${player.name}!`
@@ -423,10 +456,12 @@ const enemyTurn = (enemy) => {
 const checkForWin = () => {
   if (player.hp <= 0) {
     clearTimeout(reappendTO)
+    clearTimeout(enemyPhraseTO)
     youLose()
   } else if (enemy.hp <= 0) {
     clearTimeout(firstEnemyAttackTO)
     clearTimeout(enemyAttackDeclarationTO)
+    clearTimeout(enemyPhraseTO)
     youWin()
   }
 }
@@ -438,6 +473,7 @@ const youWin = () => {
   clearActionBar(actionBar)
   actionBar.innerText = 'YOU WIN'
 }
+
 // Obects + constructors
 
 const player = {
@@ -464,13 +500,40 @@ const enemy = {
   damage: '',
   weaknesses: ['fire', 'earth'],
   resistances: ['water', 'air'],
-  enemyPhrases: []
+  enemyPhrases: [
+    `The annoying bug is sizing up the situation.`,
+    `The annoying bug is thinking about picnics...`,
+    `The annoying bug wish it were home playing video games...`,
+    `The annoying bug is watching you closely.`,
+    `The annoying bug is thinking about flexbox...`,
+    `The annoying bug is pondering the nature of existence.`,
+    `The annoying bug is thinking about pizza bagels...`,
+    `The annoying bug is sizing up the situation.`,
+    `The annoying bug is thinking about picnics.`,
+    `The annoying bug is watching you closely.`,
+    `The annoying bug inches closer.`,
+    `The annoying bug inches closer.`,
+    `The annoying bug inches closer.`
+  ]
 }
+const fightMusic = new Audio('fightmusic.mp3')
+const playerTurnSound = new Audio('playerturn.mp3')
+const attackSound = new Audio('attack1.mp3')
+const enemyTurnSound = new Audio('enemyattack.wav')
+const critSound = new Audio('smaaash.wav')
+const missSound = new Audio('miss.wav')
+const eatSound = new Audio('eat.wav')
+const drinkSound = new Audio('bubblegum.wav')
+const statUpSound = new Audio('heal.wav')
+const errorSound = new Audio('error.wav')
+const magicSound = new Audio('psi2.wav')
+const inspectSound = new Audio('phonehangup.wav')
 
 // Event Listeners
 
 attackBtn.addEventListener('click', () => {
   attack(player, enemy)
+  fightMusic.play()
 })
 guardBtn.addEventListener('click', () => {
   guard(player, enemy)
@@ -503,6 +566,7 @@ goBackBtn.addEventListener('click', () => {
   appendActionBar()
 })
 enemyImg.addEventListener('click', () => {
+  inspectSound.play()
   appendInspectBar()
 })
 inspectBtn.addEventListener('click', () => {
