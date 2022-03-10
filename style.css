@@ -31,6 +31,7 @@ img:hover {
 img {
   height: 250px;
   width: auto;
+  animation-name: still;
 }
 
 #screen {
@@ -104,7 +105,106 @@ img {
   border: 2px solid black;
   transform: translateY(-10px);
 }
-
+@keyframes fire {
+  0% {
+    opacity: 1;
+    filter: brightness(25%);
+  }
+  5% {
+    opacity: 0;
+    filter: brightness(25%);
+  }
+  15% {
+    opacity: 1;
+    filter: brightness(25%);
+  }
+  25% {
+    opacity: 0;
+    filter: brightness(25%);
+  }
+  35% {
+    opacity: 1;
+    filter: brightness(25%);
+  }
+  45% {
+    opacity: 0;
+    filter: brightness(25%);
+  }
+  55% {
+    opacity: 1;
+    filter: brightness(25%);
+  }
+  65% {
+    opacity: 0;
+    filter: brightness(25%);
+  }
+  75% {
+    opacity: 1;
+    filter: brightness(25%);
+  }
+  85% {
+    opacity: 0;
+    filter: brightness(25%);
+  }
+  95% {
+    opacity: 1;
+    filter: brightness(25%);
+  }
+  100% {
+    opacity: 0;
+    filter: brightness(25%);
+  }
+}
+@keyframes earth {
+  0% {
+    opacity: 1;
+    transform: translateX(-50px);
+  }
+  5% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  15% {
+    opacity: 1;
+    transform: translateX(-30px);
+  }
+  25% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  35% {
+    opacity: 1;
+    transform: translateX(-20px);
+  }
+  45% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  55% {
+    opacity: 1;
+    transform: translateX(-20px);
+  }
+  65% {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  75% {
+    opacity: 1;
+    transform: translateX(-10px);
+  }
+  85% {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  95% {
+    opacity: 1;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+}
 @keyframes blink {
   0% {
     opacity: 1;
@@ -187,7 +287,7 @@ img {
     transform: translateX(-120px);
   }
 }
-@keyframes color {
+/* @keyframes color {
   0%,
   25% {
     --bg: var(--c3);
@@ -237,4 +337,4 @@ img {
       calc(var(--p) * 5) calc(var(--p) * 15),
       calc(var(--p) * -5) calc(var(--p) * 16);
   }
-}
+} */

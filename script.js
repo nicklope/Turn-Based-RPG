@@ -49,7 +49,7 @@ goBackBtn.className = 'action-btn'
 let enemyAttackDeclarationTO = ''
 let firstEnemyAttackTO = ''
 let reappendTO = ''
-
+// setTimeout(() => {
 actionBar.appendChild(attackBtn)
 attackBtn.innerText = 'attack'
 actionBar.appendChild(magicBtn)
@@ -58,6 +58,7 @@ actionBar.appendChild(guardBtn)
 guardBtn.innerText = 'guard'
 actionBar.appendChild(itemBtn)
 itemBtn.innerText = 'items'
+// }, 3000)
 
 // Functions
 const clearActionBar = (parent) => {
@@ -262,7 +263,8 @@ const fireAttack = (player, enemy) => {
       enemy.hp -= player.fireSpell * 1.5
 
       setTimeout(function () {
-        enemyDiv.style.animationName = 'blink'
+        fireSound.play()
+        enemyDiv.style.animationName = 'fire'
         actionBar.innerText = `OOOF! ${enemy.name} took ${
           player.fireSpell * 1.5
         } points of damage!`
@@ -302,6 +304,7 @@ const waterAttack = (player, enemy) => {
       enemy.hp -= player.waterSpell * 1.5
 
       setTimeout(function () {
+        waterSound.play()
         enemyDiv.style.animationName = 'blink'
         actionBar.innerText = `OOOF! ${enemy.name} took ${
           player.waterSpell * 1.5
@@ -340,6 +343,7 @@ const airAttack = (player, enemy) => {
       enemy.hp -= player.airSpell * 1.5
 
       setTimeout(function () {
+        airSound.play()
         enemyDiv.style.animationName = 'blink'
         actionBar.innerText = `OOOF! ${enemy.name} took ${
           player.airSpell * 1.5
@@ -377,7 +381,8 @@ const earthAttack = (player, enemy) => {
       enemy.hp -= player.earthSpell * 1.5
 
       setTimeout(function () {
-        enemyDiv.style.animationName = 'blink'
+        earthSound.play()
+        enemyDiv.style.animationName = 'earth'
         actionBar.innerText = `OOOF! ${enemy.name} took ${
           player.earthSpell * 1.5
         } points of damage!`
@@ -528,6 +533,10 @@ const statUpSound = new Audio('heal.wav')
 const errorSound = new Audio('error.wav')
 const magicSound = new Audio('psi2.wav')
 const inspectSound = new Audio('phonehangup.wav')
+const fireSound = new Audio('fire1.wav')
+const waterSound = new Audio('beam.wav')
+const airSound = new Audio('breath.wav')
+const earthSound = new Audio('thunder2.wav')
 
 // Event Listeners
 
