@@ -52,9 +52,15 @@ const goBackBtn = document.createElement('div')
 goBackBtn.id = 'goback-btn'
 goBackBtn.className = 'action-btn'
 
+const continueBtn = document.createElement('div')
+continueBtn.id = 'continue-btn'
+continueBtn.innerText = '???'
+
 let enemyAttackDeclarationTO = ''
 let firstEnemyAttackTO = ''
 let reappendTO = ''
+let checkForWinTO1 = ''
+let checkForWinTO2 = ''
 
 // Game Start
 const searchButton = document.createElement('div')
@@ -151,8 +157,8 @@ const attack = (player, enemy) => {
       enemyDiv.style.animationName = 'dodge'
 
       actionBar.innerText = `Oh no! ${player.name} missed!!`
-      setTimeout(checkForWin, 2000)
-      setTimeout(checkForWin, 6000)
+      checkForWinTO1 = setTimeout(checkForWin, 2000)
+      checkForWinTO2 = setTimeout(checkForWin, 6000)
       playerDisplay.innerText = ` ${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     }, 1250)
@@ -164,8 +170,8 @@ const attack = (player, enemy) => {
         player.damage * 2
       } points of critical damage!`
       enemy.hp -= player.damage * 2
-      setTimeout(checkForWin, 2000)
-      setTimeout(checkForWin, 6000)
+      checkForWinTO1 = setTimeout(checkForWin, 2000)
+      checkForWinTO2 = setTimeout(checkForWin, 6000)
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     }, 1000)
@@ -175,8 +181,8 @@ const attack = (player, enemy) => {
       enemyDiv.style.animationName = 'blink'
       actionBar.innerText = `${enemy.name} took ${player.damage} points of damage!`
       enemy.hp -= player.damage
-      setTimeout(checkForWin, 2000)
-      setTimeout(checkForWin, 6000)
+      checkForWinTO1 = setTimeout(checkForWin, 2000)
+      checkForWinTO2 = setTimeout(checkForWin, 6000)
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     }, 1250)
@@ -201,8 +207,8 @@ const useItem = (player, item, enemy) => {
         statUpSound.play()
         player.bagelCount--
         actionBar.innerText = `${player.name} gained 50 hp!(${player.bagelCount} left)`
-        setTimeout(checkForWin, 2000)
-        setTimeout(checkForWin, 6000)
+        checkForWinTO1 = setTimeout(checkForWin, 2000)
+        checkForWinTO2 = setTimeout(checkForWin, 6000)
         playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
         enemyTurn(enemy)
       }, 1750)
@@ -222,8 +228,8 @@ const useItem = (player, item, enemy) => {
         statUpSound.play()
         player.coffeeCount--
         actionBar.innerText = `${player.name} gained back 30 mp!(${player.coffeeCount} left)`
-        setTimeout(checkForWin, 2000)
-        setTimeout(checkForWin, 6000)
+        checkForWinTO1 = setTimeout(checkForWin, 2000)
+        checkForWinTO2 = setTimeout(checkForWin, 6000)
         playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
         enemyTurn(enemy)
       }, 1750)
@@ -299,8 +305,8 @@ const fireAttack = (player, enemy) => {
     playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
     enemyTurn(enemy)
   }
-  setTimeout(checkForWin, 2000)
-  setTimeout(checkForWin, 6000)
+  checkForWinTO1 = setTimeout(checkForWin, 2000)
+  checkForWinTO2 = setTimeout(checkForWin, 6000)
 }
 const waterAttack = (player, enemy) => {
   clearActionBar(actionBar)
@@ -341,8 +347,8 @@ const waterAttack = (player, enemy) => {
     playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
     enemyTurn(enemy)
   }
-  setTimeout(checkForWin, 2000)
-  setTimeout(checkForWin, 6000)
+  checkForWinTO1 = setTimeout(checkForWin, 2000)
+  checkForWinTO2 = setTimeout(checkForWin, 6000)
 }
 const airAttack = (player, enemy) => {
   clearActionBar(actionBar)
@@ -382,8 +388,8 @@ const airAttack = (player, enemy) => {
     actionBar.innerText = 'Not enough MP!'
     enemyTurn(enemy)
   }
-  setTimeout(checkForWin, 2000)
-  setTimeout(checkForWin, 6000)
+  checkForWinTO1 = setTimeout(checkForWin, 2000)
+  checkForWinTO2 = setTimeout(checkForWin, 6000)
 }
 const earthAttack = (player, enemy) => {
   clearActionBar(actionBar)
@@ -423,8 +429,8 @@ const earthAttack = (player, enemy) => {
     actionBar.innerText = 'Not enough MP!'
     enemyTurn(enemy)
   }
-  setTimeout(checkForWin, 2000)
-  setTimeout(checkForWin, 6000)
+  checkForWinTO1 = setTimeout(checkForWin, 2000)
+  checkForWinTO2 = setTimeout(checkForWin, 6000)
 }
 const enemyTurn = (enemy) => {
   enemy.damage = randomRange(20, 28)
@@ -486,6 +492,8 @@ const checkForWin = () => {
     clearTimeout(firstEnemyAttackTO)
     clearTimeout(enemyAttackDeclarationTO)
     clearTimeout(enemyPhraseTO)
+    enemyDiv.style.animationName = 'blink'
+    enemyDieSound.play()
     youWin()
   }
 }
@@ -495,7 +503,26 @@ const youLose = () => {
 }
 const youWin = () => {
   clearActionBar(actionBar)
+  clearTimeout(checkForWinTO1)
+  clearTimeout(checkForWinTO2)
+  enemyDiv.style.opacity = 0
+  screen.animation = 'still'
+  youWinSound.play()
   actionBar.innerText = 'YOU WIN'
+  setTimeout(() => {
+    fightMusic.pause()
+    actionBar.innerText = 'hang on...'
+  }, 5000)
+  setTimeout(() => {
+    actionBar.innerText = "something doesn't feel right..."
+  }, 8000)
+  setTimeout(() => {
+    actionBar.innerText = ''
+    actionBar.appendChild(continueBtn)
+    actionBar.style.display = 'flex'
+    actionBar.style.justifyContent = 'center'
+    actionBar.style.alignItems = 'center'
+  }, 13000)
 }
 
 // Obects + constructors
@@ -519,7 +546,7 @@ playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
 
 const enemy = {
   name: 'Annoying Bug',
-  hp: 200,
+  hp: 40,
   mp: 100,
   damage: '',
   weaknesses: ['fire', 'earth'],
@@ -562,6 +589,8 @@ const bugFoundSound = new Audio('audio/mysterious.wav')
 const ailmentSound = new Audio('audio/ailment.wav')
 const openSound = new Audio('audio/curshoriz.wav')
 const closeSound = new Audio('audio/cursverti.wav')
+const enemyDieSound = new Audio('audio/enemydie.wav')
+const youWinSound = new Audio('audio/eb_win.wav')
 
 // Event Listeners
 
@@ -654,4 +683,7 @@ searchButton.addEventListener('click', () => {
     screen.style.animation =
       'color var(--d) var(--e) infinite, position var(--d) var(--e) infinite'
   }, 20500)
+})
+continueBtn.addEventListener('click', () => {
+  location.href = 'fbug.html'
 })
