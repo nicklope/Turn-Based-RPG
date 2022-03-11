@@ -248,25 +248,33 @@ const useItem = (player, item, enemy) => {
 }
 const inspectEnemy = (enemy) => {
   clearActionBar(actionBar)
-  inspectSound.play()
-  player.mp -= 10
-  playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-  actionBar.innerText = `name: ${enemy.name}`
-  setTimeout(() => {
-    actionBar.innerText = ` likes: ruining picnics AND programs`
-  }, 2500)
-  setTimeout(() => {
-    actionBar.innerText = `max hp: 200`
-  }, 4500)
-  setTimeout(() => {
-    actionBar.innerText = 'weaknesses: fire & ???'
-  }, 6500)
-  setTimeout(() => {
-    actionBar.innerText = 'resistances: water & ???'
-  }, 8500)
-  setTimeout(() => {
-    appendActionBar()
-  }, 10500)
+  if (player.mp >= 10) {
+    inspectSound.play()
+    player.mp -= 10
+    playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
+    actionBar.innerText = `name: ${enemy.name}`
+    setTimeout(() => {
+      actionBar.innerText = ` likes: ruining picnics AND programs`
+    }, 2500)
+    setTimeout(() => {
+      actionBar.innerText = `max hp: 200`
+    }, 4500)
+    setTimeout(() => {
+      actionBar.innerText = 'weaknesses: fire & ???'
+    }, 6500)
+    setTimeout(() => {
+      actionBar.innerText = 'resistances: water & ???'
+    }, 8500)
+    setTimeout(() => {
+      appendActionBar()
+    }, 10500)
+  } else {
+    errorSound.play()
+    actionBar.innerText = 'Not enough MP!'
+    setTimeout(function () {
+      appendActionBar(actionBar)
+    }, 1750)
+  }
 }
 const fireAttack = (player, enemy) => {
   clearActionBar(actionBar)
