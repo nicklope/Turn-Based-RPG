@@ -2,7 +2,7 @@
 
 ## **About Development...**
 
-_Bug Destroyer! RPG_ is a short game I developed as my unit 1 project for General Assembly's software engineering immersive. _Bug Destroyer! RPG_ is a turn based roleplaying game where the player assumes the role of an AI designed to eliminate bugs in a program. The game currently has one fight, but as of March 11th 2022, a second fight is in development.
+_Bug Destroyer! RPG_ is a short game I developed as my unit 1 project for General Assembly's software engineering immersive. _Bug Destroyer! RPG_ is a turn based roleplaying game where the player assumes the role of an AI designed to eliminate bugs in a program. The game currently has one fight, but as of March 11th 2022, a second fight is in development. Here is the [trello board](https://trello.com/b/pb4QCtGq/turn-based-rpg) I used during development.
 
 _Bug Destroyer! RPG_ is heavily inspired by (and an homage to) Nintendo's 1994 Super Ninetendo release _EarthBound_ (_Mother 2_ in Japan). _EarthBound_ is an offbeat, quirky (and sometimes _dark_) RPG about a small town boy who stops an alien invasion with the help of psychic powers and his friends. _EarthBound_ was published by Nintendo and developed by HAL Laboratory and APE (which was led by the legendary japanese media personality, Shigesato Itoi).
 
