@@ -140,7 +140,7 @@ const attack = (player, enemy) => {
   clearActionBar(actionBar)
   let hitRating = hitRate()
   player.damage = randomRange(18, 23)
-  console.log(enemy.hp, player.hp)
+
   playerTurnSound.play()
   actionBar.innerText = `${player.name} goes for the attack!`
 
@@ -281,7 +281,10 @@ const fireAttack = (player, enemy) => {
       enemyTurn(enemy)
     } else if (enemy.resistances.includes('fire')) {
       enemy.hp += player.fireSpell - 10
+
       setTimeout(function () {
+        ailmentSound.play()
+        enemyDiv.style.animationName = 'nouse'
         actionBar.innerText = `Its no use! Fire is only making it stronger! ${
           enemy.name
         } gained ${player.firespell - 10} hp`
@@ -322,7 +325,10 @@ const waterAttack = (player, enemy) => {
       enemyTurn(enemy)
     } else if (enemy.resistances.includes('water')) {
       enemy.hp += player.waterSpell - 10
+
       setTimeout(function () {
+        ailmentSound.play()
+        enemyDiv.style.animationName = 'nouse'
         actionBar.innerText = `Its no use! Water is only making it stronger!`
       }, 1250)
       player.mp -= 25
@@ -361,7 +367,10 @@ const airAttack = (player, enemy) => {
       enemyTurn(enemy)
     } else if (enemy.resistances.includes('air')) {
       enemy.hp += player.airSpell - 10
+
       setTimeout(function () {
+        ailmentSound.play()
+        enemyDiv.style.animationName = 'nouse'
         actionBar.innerText = `Its no use! Wind is only making it stronger!`
       }, 1250)
       player.mp -= 20
@@ -399,7 +408,10 @@ const earthAttack = (player, enemy) => {
       enemyTurn(enemy)
     } else if (enemy.resistances.includes('earth')) {
       enemy.hp += player.earthSpell - 10
+
       setTimeout(function () {
+        ailmentSound.play()
+        enemyDiv.style.animationName = 'nouse'
         actionBar.innerText = `Its no use! The earthquake is only making it stronger!`
       }, 1250)
       player.mp -= 20
@@ -547,6 +559,9 @@ const earthSound = new Audio('audio/thunder2.wav')
 const guardSound = new Audio('audio/tcrash.wav')
 const startSound = new Audio('audio/equip.wav')
 const bugFoundSound = new Audio('audio/mysterious.wav')
+const ailmentSound = new Audio('audio/ailment.wav')
+const openSound = new Audio('audio/curshoriz.wav')
+const closeSound = new Audio('audio/cursverti.wav')
 
 // Event Listeners
 
@@ -558,9 +573,11 @@ guardBtn.addEventListener('click', () => {
   guard(player, enemy)
 })
 itemBtn.addEventListener('click', () => {
+  openSound.play()
   appendItemBar()
 })
 magicBtn.addEventListener('click', () => {
+  openSound.play()
   appendMagicBar()
 })
 fireBtn.addEventListener('click', () => {
@@ -582,6 +599,7 @@ coffeeBtn.addEventListener('click', () => {
   useItem(player, 'coffee', enemy)
 })
 goBackBtn.addEventListener('click', () => {
+  closeSound.play()
   appendActionBar()
 })
 enemyImg.addEventListener('click', () => {

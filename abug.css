@@ -122,6 +122,44 @@ img {
   transform: translateY(-10px);
   cursor: pointer;
 }
+@keyframes nouse {
+  0% {
+    filter: hue-rotate(10deg);
+  }
+  5% {
+    filter: hue-rotate(20deg);
+  }
+  15% {
+    filter: hue-rotate(30deg);
+  }
+  25% {
+    filter: hue-rotate(40deg);
+  }
+  35% {
+    filter: hue-rotate(50deg);
+  }
+  45% {
+    filter: hue-rotate(60deg);
+  }
+  55% {
+    filter: hue-rotate(70deg);
+  }
+  65% {
+    filter: hue-rotate(80deg);
+  }
+  75% {
+    filter: hue-rotate(90deg);
+  }
+  85% {
+    filter: hue-rotate(100deg);
+  }
+  95% {
+    filter: hue-rotate(110deg);
+  }
+  100% {
+    filter: hue-rotate(120deg);
+  }
+}
 @keyframes fire {
   0% {
     opacity: 1;

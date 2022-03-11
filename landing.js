@@ -59,7 +59,6 @@ submitName.addEventListener('click', () => {
     instructions.innerText = `Are you ready?`
   }, 21000)
   setTimeout(() => {
-    // document.localStorage.setItem('name', nameInput.value)
     landingFlex.appendChild(yesBtn)
   }, 23000)
 })
