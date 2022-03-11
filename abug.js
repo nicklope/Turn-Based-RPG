@@ -56,6 +56,10 @@ const continueBtn = document.createElement('div')
 continueBtn.id = 'continue-btn'
 continueBtn.innerText = '???'
 
+const tryAgainBtn = document.createElement('div')
+tryAgainBtn.id = 'tryagain-btn'
+tryAgainBtn.innerText = 'try again?'
+
 let enemyAttackDeclarationTO = ''
 let firstEnemyAttackTO = ''
 let reappendTO = ''
@@ -487,6 +491,9 @@ const checkForWin = () => {
   if (player.hp <= 0) {
     clearTimeout(reappendTO)
     clearTimeout(enemyPhraseTO)
+    fightMusic.pause()
+    youLoseSound.play()
+    playerDisplay.style.color = 'red'
     youLose()
   } else if (enemy.hp <= 0) {
     clearTimeout(firstEnemyAttackTO)
@@ -499,14 +506,20 @@ const checkForWin = () => {
 }
 const youLose = () => {
   clearActionBar(actionBar)
+  clearTimeout(checkForWinTO1)
+  clearTimeout(checkForWinTO2)
   actionBar.innerText = 'GAME OVER'
+  setTimeout(() => {
+    actionBar.innerText = ''
+    actionBar.appendChild(tryAgainBtn)
+  }, 3500)
 }
 const youWin = () => {
   clearActionBar(actionBar)
   clearTimeout(checkForWinTO1)
   clearTimeout(checkForWinTO2)
   enemyDiv.style.opacity = 0
-  screen.animation = 'still'
+  screen.style.animation = 'still'
   youWinSound.play()
   actionBar.innerText = 'YOU WIN'
   setTimeout(() => {
@@ -538,7 +551,7 @@ const player = {
   earthSpell: 16,
   guarding: false,
   pizzaBagel: 50,
-  bagelCount: 2,
+  bagelCount: 4,
   niceCoffee: 30,
   coffeeCount: 2
 }
@@ -546,7 +559,7 @@ playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
 
 const enemy = {
   name: 'Annoying Bug',
-  hp: 40,
+  hp: 200,
   mp: 100,
   damage: '',
   weaknesses: ['fire', 'earth'],
@@ -591,6 +604,7 @@ const openSound = new Audio('audio/curshoriz.wav')
 const closeSound = new Audio('audio/cursverti.wav')
 const enemyDieSound = new Audio('audio/enemydie.wav')
 const youWinSound = new Audio('audio/eb_win.wav')
+const youLoseSound = new Audio('audio/die.wav')
 
 // Event Listeners
 
@@ -686,4 +700,7 @@ searchButton.addEventListener('click', () => {
 })
 continueBtn.addEventListener('click', () => {
   location.href = 'fbug.html'
+})
+tryAgainBtn.addEventListener('click', () => {
+  location.href = 'abug.html'
 })
