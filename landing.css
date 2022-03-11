@@ -31,3 +31,7 @@ h1 {
   border-style: none;
   cursor: pointer;
 }
+#yes-btn {
+  margin-top: 10px;
+  cursor: pointer;
+}

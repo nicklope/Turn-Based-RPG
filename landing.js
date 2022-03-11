@@ -11,6 +11,9 @@ const submitName = document.createElement('input')
 submitName.id = 'submit-btn'
 submitName.setAttribute('type', 'button')
 
+const yesBtn = document.querySelector('a')
+yesBtn.remove()
+
 startBtn.addEventListener('click', () => {
   startSound.play()
   startBtn.remove()
@@ -35,14 +38,28 @@ startBtn.addEventListener('click', () => {
 submitName.addEventListener('click', () => {
   startSound.play()
   nameForm.remove()
-  instructions.innerText = `Ohoho! An AI program with a name? ${nameInput.value}!  How anomalous! :)`
+  instructions.innerText = `Ohoho! An AI program that names itself? ${nameInput.value}!  How anomalous! :)`
+  localStorage.setItem('inputName', nameInput.value)
   setTimeout(() => {
     instructions.innerText = `${nameInput.value}...`
-  }, 4000)
+  }, 6000)
   setTimeout(() => {
     instructions.innerText = `I created you for one purpose...`
-  }, 7000)
+  }, 8000)
   setTimeout(() => {
-    instructions.innerText = `to DESTROY BUGS`
-  }, 10000)
+    instructions.innerText = `to search through my code...`
+  }, 11000)
+  setTimeout(() => {
+    instructions.innerText = `AND DESTROY BUGS!`
+  }, 14000)
+  setTimeout(() => {
+    instructions.innerText = `I made you more than well equipped for this task...`
+  }, 17000)
+  setTimeout(() => {
+    instructions.innerText = `Are you ready?`
+  }, 21000)
+  setTimeout(() => {
+    // document.localStorage.setItem('name', nameInput.value)
+    landingFlex.appendChild(yesBtn)
+  }, 23000)
 })

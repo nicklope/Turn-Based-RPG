@@ -5,6 +5,7 @@ const enemyDiv = document.getElementById('enemy-div')
 const playerDisplay = document.getElementById('player-display')
 const enemyImg = document.querySelector('img')
 const screen = document.getElementById('screen')
+// const playerName = localStorage.getItem('inputName')
 
 const attackBtn = document.createElement('div')
 attackBtn.id = 'attack-btn'
@@ -488,7 +489,7 @@ const youWin = () => {
 // Obects + constructors
 
 const player = {
-  name: 'Player',
+  name: localStorage.getItem('inputName'),
   hp: 100,
   mp: 100,
   damage: '',
@@ -544,6 +545,8 @@ const waterSound = new Audio('audio/beam.wav')
 const airSound = new Audio('audio/breath.wav')
 const earthSound = new Audio('audio/thunder2.wav')
 const guardSound = new Audio('audio/tcrash.wav')
+const startSound = new Audio('audio/equip.wav')
+const bugFoundSound = new Audio('audio/mysterious.wav')
 
 // Event Listeners
 
@@ -590,6 +593,7 @@ inspectBtn.addEventListener('click', () => {
 })
 searchButton.addEventListener('click', () => {
   searchButton.remove()
+  startSound.play()
   actionBar.innerText = 'Searching'
   setTimeout(() => {
     actionBar.innerText = 'Searching.'
@@ -619,8 +623,9 @@ searchButton.addEventListener('click', () => {
     actionBar.innerText = 'Searching...'
   }, 9000)
   setTimeout(() => {
+    bugFoundSound.play()
     enemyImg.style.opacity = 1
-    actionBar.innerText = 'Bug Found!'
+    actionBar.innerText = 'Bug Identified!'
   }, 10000)
   setTimeout(() => {
     playerDisplay.style.opacity = 1
