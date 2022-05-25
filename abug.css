@@ -150,6 +150,12 @@ img {
   transform: translateY(-10px);
   cursor: pointer;
 }
+#guard-btn{
+  animation-name: still;
+  animation-fill-mode:forwards;
+  animation-duration: 5s;
+  animation-delay: 5s;
+}
 @keyframes nouse {
   0% {
     filter: hue-rotate(10deg);
@@ -419,5 +425,10 @@ img {
       calc(var(--p) * -5) calc(var(--p) * 17),
       calc(var(--p) * 5) calc(var(--p) * 15),
       calc(var(--p) * -5) calc(var(--p) * 16);
+  }
+}
+@keyframes leave {
+  100%{
+    transform: translateY(10000px)
   }
 }

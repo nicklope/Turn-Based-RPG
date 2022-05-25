@@ -61,11 +61,15 @@ tryAgainBtn.id = 'tryagain-btn'
 tryAgainBtn.innerText = 'try again?'
 
 let enemyAttackDeclarationTO = ''
+let enemyBugOneDeclarationTO = ''
+let enemyBugOneTO = ''
 let firstEnemyAttackTO = ''
 let reappendTO = ''
 let checkForWinTO1 = ''
 let checkForWinTO2 = ''
 let phase = 1
+let bugOne = false
+let bugTwo = false
 
 // Game Start
 const searchButton = document.createElement('div')
@@ -495,6 +499,35 @@ const enemyTurn = (enemy) => {
       reappendTO = setTimeout(appendActionBar, 1500)
     }
   }, 5000)
+}
+const enemyBugOne = (enemy) => {
+  enemyBugOneDeclarationTO = setTimeout(function () {
+    enemyTurnSound.play()
+    enemyDiv.style.animationName = 'still'
+    actionBar.innerText = `${enemy.name} caused 8 critical vulnerabilities!`
+  }, 3000)
+  enemyBugOneTO = setTimeout(function () {
+    guardBtn.style.animationName = 'leave'
+    actionBar.innerText = `The guard button  coulden't deal with it and decided to leave`
+    enemyPhraseTO = setTimeout(() => {
+      actionBar.innerText = `${enemy.name} started giggling`
+    }, 2600)
+    reappendTO = setTimeout(appendActionBar, 4500)
+  }, 5000)
+}
+const checkEnemyPhase = () => {
+  if (enemy.hp <= 150) {
+    phase = 2
+  } else if (enemy.hp <= 50) {
+    phase = 3
+  }
+  if (phase === 1) {
+    enemyTurn()
+  } else if (phase === 2 && bugOne === false) {
+    enemyBugOne()
+  } else if (phase === 3 && bugTwo === false) {
+    enemyBugTwo()
+  }
 }
 const checkForWin = () => {
   if (player.hp <= 0) {
