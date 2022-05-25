@@ -169,7 +169,8 @@ const attack = (player, enemy) => {
       checkForWinTO1 = setTimeout(checkForWin, 2000)
       checkForWinTO2 = setTimeout(checkForWin, 6000)
       playerDisplay.innerText = ` ${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      // enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     }, 1250)
   } else if (hitRating >= 9) {
     setTimeout(function () {
@@ -182,7 +183,8 @@ const attack = (player, enemy) => {
       checkForWinTO1 = setTimeout(checkForWin, 2000)
       checkForWinTO2 = setTimeout(checkForWin, 6000)
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      // enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     }, 1000)
   } else {
     setTimeout(function () {
@@ -193,7 +195,8 @@ const attack = (player, enemy) => {
       checkForWinTO1 = setTimeout(checkForWin, 2000)
       checkForWinTO2 = setTimeout(checkForWin, 6000)
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      checkEnemyPhase(enemy)
+      // enemyTurn(enemy)
     }, 1250)
   }
 }
@@ -203,7 +206,8 @@ const guard = (attacker, attacked) => {
   actionBar.innerText = `${attacker.name} braced for an attack!`
   attacker.guarding = true
   playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-  enemyTurn(attacked)
+  // enemyTurn(attacked)
+  checkEnemyPhase(attacked)
 }
 const useItem = (player, item, enemy) => {
   clearActionBar(actionBar)
@@ -515,19 +519,29 @@ const enemyBugOne = (enemy) => {
     reappendTO = setTimeout(appendActionBar, 4500)
   }, 5000)
 }
-const checkEnemyPhase = () => {
-  if (enemy.hp <= 150) {
+const checkEnemyPhase = (enemy) => {
+  if (bugOne) {
+    guardBtn.style.animationName = 'still'
+    guardBtn.style.transform = 'translateY(-1000px)'
+  }
+  if (enemy.hp <= 120) {
     phase = 2
   } else if (enemy.hp <= 50) {
     phase = 3
   }
+
   if (phase === 1) {
-    enemyTurn()
+    enemyTurn(enemy)
   } else if (phase === 2 && bugOne === false) {
-    enemyBugOne()
-  } else if (phase === 3 && bugTwo === false) {
-    enemyBugTwo()
+    phase = 1
+    bugOne = true
+    enemyBugOne(enemy)
+  } else {
+    enemyTurn(enemy)
   }
+  // else if (phase === 3 && bugTwo === false) {
+  //   enemyBugTwo()
+  // }
 }
 const checkForWin = () => {
   if (player.hp <= 0) {

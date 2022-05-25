@@ -154,7 +154,7 @@ img {
   animation-name: still;
   animation-fill-mode:forwards;
   animation-duration: 5s;
-  animation-delay: 5s;
+ 
 }
 @keyframes nouse {
   0% {
@@ -429,6 +429,6 @@ img {
 }
 @keyframes leave {
   100%{
-    transform: translateY(10000px)
+    transform: translateY(-1000px)
   }
 }
