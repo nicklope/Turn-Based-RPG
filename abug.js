@@ -65,6 +65,7 @@ let firstEnemyAttackTO = ''
 let reappendTO = ''
 let checkForWinTO1 = ''
 let checkForWinTO2 = ''
+let phase = 1
 
 // Game Start
 const searchButton = document.createElement('div')

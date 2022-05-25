@@ -139,7 +139,7 @@ const attack = (player, enemy) => {
   clearActionBar(actionBar)
   let hitRating = hitRate()
   player.damage = randomRange(18, 23)
-
+  console.log('attacking!')
   playerTurnSound.play()
   actionBar.innerText = `${player.name} goes for the attack!`
 
@@ -475,7 +475,7 @@ const enemyTurn = (enemy) => {
         reappendTO = setTimeout(appendActionBar, 1500)
       }
     }, 5000)
-  } else if (enemy.hp <= 100) {
+  } else if (enemy.hp <= 150) {
     enemyAttackDeclarationTO = setTimeout(function () {
       enemyTurnSound.play()
       enemyDiv.style.animationName = 'still'
@@ -581,7 +581,7 @@ const enemy = {
     `The fatal bug is muttering insanely.`,
     `The fatal bug seems bored.`,
     `The fatal bug is watching you closely.`,
-    `The fatal bug hops closer.`,
+    `The fatal bug is moving around, just moving around.`,
     `The fatal bug hops closer.`,
     `The fatal bug hops closer.`
   ]
@@ -612,27 +612,27 @@ const closeSound = new Audio('audio/cursverti.wav')
 // Event Listeners
 
 attackBtn.addEventListener('click', () => {
-  // attack(player, enemy)
-  // fightMusic.play()
-  clearActionBar(actionBar)
-  actionBar.innerText = 'Thank you for playing! Fatal bug fight coming soon!'
+  attack(player, enemy)
+  fightMusic.play()
+  // clearActionBar(actionBar)
+  // actionBar.innerText = 'Thank you for playing! Fatal bug fight coming soon!'
 })
 guardBtn.addEventListener('click', () => {
-  // guard(player, enemy)
-  clearActionBar(actionBar)
-  actionBar.innerText = 'Thank you for playing! Fatal bug fight coming soon!'
+  guard(player, enemy)
+  // clearActionBar(actionBar)
+  // actionBar.innerText = 'Thank you for playing! Fatal bug fight coming soon!'
 })
 itemBtn.addEventListener('click', () => {
-  // openSound.play()
-  // appendItemBar()
-  clearActionBar(actionBar)
-  actionBar.innerText = 'Thank you for playing! Fatal bug fight coming soon!'
+  openSound.play()
+  appendItemBar()
+  // clearActionBar(actionBar)
+  // actionBar.innerText = 'Thank you for playing! Fatal bug fight coming soon!'
 })
 magicBtn.addEventListener('click', () => {
-  // openSound.play()
-  // appendMagicBar()
-  clearActionBar(actionBar)
-  actionBar.innerText = 'Thank you for playing! Fatal bug fight coming soon!'
+  openSound.play()
+  appendMagicBar()
+  // clearActionBar(actionBar)
+  // actionBar.innerText = 'Thank you for playing! Fatal bug fight coming soon!'
 })
 fireBtn.addEventListener('click', () => {
   // fireAttack(player, enemy)
@@ -668,23 +668,23 @@ inspectBtn.addEventListener('click', () => {
 searchButton.addEventListener('click', () => {
   searchButton.remove()
   startSound.play()
-  actionBar.innerText = 'the annoying bug...'
-  setTimeout(() => {
-    actionBar.innerText = 'by destroying it...'
-  }, 3000)
-  setTimeout(() => {
-    actionBar.innerText = 'you made an even worse bug!'
-  }, 7000)
+  // actionBar.innerText = 'the annoying bug...'
+  // setTimeout(() => {
+  //   actionBar.innerText = 'by destroying it...'
+  // }, 3000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'you made an even worse bug!'
+  // }, 7000)
   setTimeout(() => {
     bugFoundSound.play()
     enemyImg.style.opacity = 1
     actionBar.innerText = 'Bug Identified!'
-  }, 9000)
+  }, 1000)
   setTimeout(() => {
     playerDisplay.style.opacity = 1
     appendActionBar()
     fightMusic.play()
     screen.style.animation =
       'color var(--d) var(--e) infinite, position var(--d) var(--e) infinite'
-  }, 11000)
+  }, 1500)
 })
