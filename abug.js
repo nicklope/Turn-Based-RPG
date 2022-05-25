@@ -513,11 +513,9 @@ const enemyBugOne = (enemy) => {
   enemyBugOneTO = setTimeout(function () {
     guardBtn.style.animationName = 'leave'
     actionBar.innerText = `The guard button  coulden't deal with it and decided to leave`
-    enemyPhraseTO = setTimeout(() => {
-      actionBar.innerText = `${enemy.name} started giggling`
-    }, 2600)
+
     reappendTO = setTimeout(appendActionBar, 4500)
-  }, 5000)
+  }, 4000)
 }
 const checkEnemyPhase = (enemy) => {
   if (bugOne) {
