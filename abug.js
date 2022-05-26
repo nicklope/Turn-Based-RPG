@@ -223,7 +223,8 @@ const useItem = (player, item, enemy) => {
         checkForWinTO1 = setTimeout(checkForWin, 2000)
         checkForWinTO2 = setTimeout(checkForWin, 6000)
         playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-        enemyTurn(enemy)
+        // enemyTurn(enemy)
+        checkEnemyPhase(enemy)
       }, 1750)
     } else if (player.bagelCount <= 0) {
       errorSound.play()
@@ -244,7 +245,8 @@ const useItem = (player, item, enemy) => {
         checkForWinTO1 = setTimeout(checkForWin, 2000)
         checkForWinTO2 = setTimeout(checkForWin, 6000)
         playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-        enemyTurn(enemy)
+        // enemyTurn(enemy)
+        checkEnemyPhase(enemy)
       }, 1750)
     } else if (player.coffeeCount <= 0) {
       errorSound.play()
@@ -305,7 +307,8 @@ const fireAttack = (player, enemy) => {
 
       player.mp -= 25
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      // enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     } else if (enemy.resistances.includes('fire')) {
       enemy.hp += player.fireSpell - 10
 
@@ -318,13 +321,15 @@ const fireAttack = (player, enemy) => {
       }, 1250)
       player.mp -= 25
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      // enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     }
   } else {
     errorSound.play()
     actionBar.innerText = 'Not enough MP!'
     playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-    enemyTurn(enemy)
+    // enemyTurn(enemy)
+    checkEnemyPhase(enemy)
   }
   checkForWinTO1 = setTimeout(checkForWin, 2000)
   checkForWinTO2 = setTimeout(checkForWin, 6000)
@@ -349,7 +354,8 @@ const waterAttack = (player, enemy) => {
 
       player.mp -= 25
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      // enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     } else if (enemy.resistances.includes('water')) {
       enemy.hp += player.waterSpell - 10
 
@@ -360,13 +366,15 @@ const waterAttack = (player, enemy) => {
       }, 1250)
       player.mp -= 25
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      // enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     }
   } else {
     errorSound.play()
     actionBar.innerText = 'Not enough MP!'
     playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-    enemyTurn(enemy)
+    // enemyTurn(enemy)
+    checkEnemyPhase(enemy)
   }
   checkForWinTO1 = setTimeout(checkForWin, 2000)
   checkForWinTO2 = setTimeout(checkForWin, 6000)
@@ -391,7 +399,8 @@ const airAttack = (player, enemy) => {
 
       player.mp -= 20
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      // enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     } else if (enemy.resistances.includes('air')) {
       enemy.hp += player.airSpell - 10
 
@@ -402,12 +411,14 @@ const airAttack = (player, enemy) => {
       }, 1250)
       player.mp -= 20
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      // enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     }
   } else {
     errorSound.play()
     actionBar.innerText = 'Not enough MP!'
-    enemyTurn(enemy)
+    // enemyTurn(enemy)
+    checkEnemyPhase(enemy)
   }
   checkForWinTO1 = setTimeout(checkForWin, 2000)
   checkForWinTO2 = setTimeout(checkForWin, 6000)
@@ -432,7 +443,8 @@ const earthAttack = (player, enemy) => {
 
       player.mp -= 20
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      // enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     } else if (enemy.resistances.includes('earth')) {
       enemy.hp += player.earthSpell - 10
 
@@ -443,18 +455,20 @@ const earthAttack = (player, enemy) => {
       }, 1250)
       player.mp -= 20
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      // enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     }
   } else {
     errorSound.play()
     actionBar.innerText = 'Not enough MP!'
-    enemyTurn(enemy)
+    // enemyTurn(enemy)
+    checkEnemyPhase(enemy)
   }
   checkForWinTO1 = setTimeout(checkForWin, 2000)
   checkForWinTO2 = setTimeout(checkForWin, 6000)
 }
 const enemyTurn = (enemy) => {
-  enemy.damage = randomRange(20, 28)
+  enemy.damage = randomRange(15, 25)
   let hitRating = hitRate()
   let i = Math.floor(Math.random() * 13)
 
@@ -508,21 +522,28 @@ const enemyBugOne = (enemy) => {
   enemyBugOneDeclarationTO = setTimeout(function () {
     enemyTurnSound.play()
     enemyDiv.style.animationName = 'still'
-    actionBar.innerText = `${enemy.name} caused 8 critical vulnerabilities!`
+    actionBar.style.color = 'red'
+    critSound.play()
+    actionBar.style.animationName = 'shake'
+    actionBar.innerText = `The bug caused 8 critical vulnerabilities!`
   }, 3000)
   enemyBugOneTO = setTimeout(function () {
     guardBtn.style.animationName = 'leave'
-    actionBar.innerText = `The guard button  coulden't deal with it and decided to leave`
+    actionBar.style.color = 'white'
+    ailmentSound.play()
+    actionBar.innerText = `The guard button couldn't deal with it and decided to leave`
 
-    reappendTO = setTimeout(appendActionBar, 4500)
-  }, 4000)
+    reappendTO = setTimeout(function () {
+      appendActionBar()
+    }, 3000)
+  }, 5700)
 }
 const checkEnemyPhase = (enemy) => {
   if (bugOne) {
     guardBtn.style.animationName = 'still'
     guardBtn.style.transform = 'translateY(-1000px)'
   }
-  if (enemy.hp <= 120) {
+  if (enemy.hp <= 170) {
     phase = 2
   } else if (enemy.hp <= 50) {
     phase = 3
@@ -697,6 +718,10 @@ coffeeBtn.addEventListener('click', () => {
 })
 goBackBtn.addEventListener('click', () => {
   closeSound.play()
+  if (bugOne) {
+    guardBtn.style.animationName = 'still'
+    guardBtn.style.transform = 'translateY(-1000px)'
+  }
   appendActionBar()
 })
 enemyImg.addEventListener('click', () => {
@@ -710,47 +735,48 @@ searchButton.addEventListener('click', () => {
   searchButton.remove()
   startSound.play()
   actionBar.innerText = 'Searching'
-  setTimeout(() => {
-    actionBar.innerText = 'Searching.'
-  }, 1000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching..'
-  }, 2000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching...'
-  }, 3000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching.'
-  }, 4000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching..'
-  }, 5000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching...'
-  }, 6000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching.'
-  }, 7000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching..'
-  }, 8000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching...'
-  }, 9000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching.'
+  // }, 1000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching..'
+  // }, 2000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching...'
+  // }, 3000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching.'
+  // }, 4000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching..'
+  // }, 5000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching...'
+  // }, 6000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching.'
+  // }, 7000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching..'
+  // }, 8000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching...'
+  // }, 9000)
   setTimeout(() => {
     bugFoundSound.play()
     enemyImg.style.opacity = 1
     actionBar.innerText = 'Bug Identified!'
-  }, 10000)
+  }, 1000)
   setTimeout(() => {
     playerDisplay.style.opacity = 1
     appendActionBar()
     fightMusic.play()
-  }, 11000)
+  }, 1200)
   setTimeout(() => {
     screen.style.animation =
       'color var(--d) var(--e) infinite, position var(--d) var(--e) infinite'
-  }, 20500)
+  }, 10500)
+  // animation should start at 20500
 })
 continueBtn.addEventListener('click', () => {
   location.href = 'fbug.html'
