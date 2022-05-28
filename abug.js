@@ -63,11 +63,14 @@ tryAgainBtn.innerText = 'try again?'
 let enemyAttackDeclarationTO = ''
 let enemyBugOneDeclarationTO = ''
 let enemyBugOneTO = ''
+let enemyBugTwpDeclarationTO = ''
+let enemyBugTwoTO = ''
 let firstEnemyAttackTO = ''
 let reappendTO = ''
 let checkForWinTO1 = ''
 let checkForWinTO2 = ''
 let phase = 1
+let timerBool = false
 let bugOne = false
 let bugTwo = false
 
@@ -90,6 +93,9 @@ const clearActionBar = (parent) => {
   actionBar.style.alignItems = 'center'
 }
 const appendActionBar = () => {
+  if (bugTwo) {
+    return (timerBool = true)
+  }
   actionBar.style.animationName = 'still'
   actionBar.innerText = ''
   actionBar.style.display = 'grid'
@@ -538,14 +544,51 @@ const enemyBugOne = (enemy) => {
     }, 3000)
   }, 5700)
 }
+const enemyBugTwo = (enemy) => {
+  enemyBugTwoDeclarationTO = setTimeout(function () {
+    enemyTurnSound.play()
+    enemyDiv.style.animationName = 'still'
+    actionBar.style.color = 'red'
+    critSound.play()
+    actionBar.style.animationName = 'shake'
+    actionBar.innerText = `The bug started crashing the program!`
+  }, 3000)
+  enemyBugTwoTO = setTimeout(function () {
+    guardBtn.style.animationName = 'leave'
+    ailmentSound.play()
+    actionBar.innerText = `Everything is all buggy!`
+
+    reappendTO = setTimeout(function () {
+      timerBool = true
+      let timer = setInterval(() => {
+        if (timerBool === true) {
+          randomButton(attackBtn, magicBtn, itemBtn)
+        }
+      }, 700)
+    }, 3000)
+  }, 5700)
+}
+const randomButton = (btn1, btn2, btn3, btn4, btn5) => {
+  let arr = []
+  arr.push(btn1)
+  arr.push(btn2)
+  arr.push(btn3)
+  btn1.className = 'random-btn'
+  btn2.className = 'random-btn'
+  btn3.className = 'random-btn'
+  let i = Math.floor(Math.random() * 3)
+  console.log(i)
+  clearActionBar(actionBar)
+  actionBar.appendChild(arr[i])
+}
 const checkEnemyPhase = (enemy) => {
   if (bugOne) {
     guardBtn.style.animationName = 'still'
     guardBtn.style.transform = 'translateY(-1000px)'
   }
-  if (enemy.hp <= 170) {
+  if (enemy.hp <= 100 && enemy.hp >= 20) {
     phase = 2
-  } else if (enemy.hp <= 50) {
+  } else if (enemy.hp <= 20) {
     phase = 3
   }
 
@@ -555,12 +598,13 @@ const checkEnemyPhase = (enemy) => {
     phase = 1
     bugOne = true
     enemyBugOne(enemy)
+  } else if (phase === 3 && bugTwo === false) {
+    phase = 1
+    bugTwo = true
+    enemyBugTwo(enemy)
   } else {
     enemyTurn(enemy)
   }
-  // else if (phase === 3 && bugTwo === false) {
-  //   enemyBugTwo()
-  // }
 }
 const checkForWin = () => {
   if (player.hp <= 0) {
@@ -612,6 +656,12 @@ const youWin = () => {
     actionBar.style.alignItems = 'center'
   }, 13000)
 }
+
+let timer = setInterval(() => {
+  if (timerBool === true) {
+    randomButton(attackBtn, magicBtn, itemBtn)
+  }
+}, 700)
 
 // Obects + constructors
 
@@ -684,6 +734,8 @@ const youLoseSound = new Audio('audio/die.wav')
 // Event Listeners
 
 attackBtn.addEventListener('click', () => {
+  if (bugTwo) timerBool = false
+  clearInterval(timer)
   attack(player, enemy)
   fightMusic.play()
 })
@@ -691,10 +743,14 @@ guardBtn.addEventListener('click', () => {
   guard(player, enemy)
 })
 itemBtn.addEventListener('click', () => {
+  if (bugTwo) timerBool = false
+  clearInterval(timer)
   openSound.play()
   appendItemBar()
 })
 magicBtn.addEventListener('click', () => {
+  if (bugTwo) timerBool = false
+  clearInterval(timer)
   openSound.play()
   appendMagicBar()
 })
