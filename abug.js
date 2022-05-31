@@ -588,7 +588,7 @@ const checkEnemyPhase = (enemy) => {
   }
   if (enemy.hp <= 100 && enemy.hp >= 20) {
     phase = 2
-  } else if (enemy.hp <= 20) {
+  } else if (enemy.hp <= 30) {
     phase = 3
   }
 
@@ -618,6 +618,7 @@ const checkForWin = () => {
     clearTimeout(firstEnemyAttackTO)
     clearTimeout(enemyAttackDeclarationTO)
     clearTimeout(enemyPhraseTO)
+    clearTimeout(timer)
     enemyDiv.style.animationName = 'blink'
     enemyDieSound.play()
     youWin()
@@ -791,47 +792,47 @@ searchButton.addEventListener('click', () => {
   searchButton.remove()
   startSound.play()
   actionBar.innerText = 'Searching'
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching.'
-  // }, 1000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching..'
-  // }, 2000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching...'
-  // }, 3000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching.'
-  // }, 4000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching..'
-  // }, 5000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching...'
-  // }, 6000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching.'
-  // }, 7000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching..'
-  // }, 8000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching...'
-  // }, 9000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching.'
+  }, 1000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching..'
+  }, 2000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching...'
+  }, 3000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching.'
+  }, 4000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching..'
+  }, 5000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching...'
+  }, 6000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching.'
+  }, 7000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching..'
+  }, 8000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching...'
+  }, 9000)
   setTimeout(() => {
     bugFoundSound.play()
     enemyImg.style.opacity = 1
     actionBar.innerText = 'Bug Identified!'
-  }, 1000)
+  }, 10000)
   setTimeout(() => {
     playerDisplay.style.opacity = 1
     appendActionBar()
     fightMusic.play()
-  }, 1200)
+  }, 12000)
   setTimeout(() => {
     screen.style.animation =
       'color var(--d) var(--e) infinite, position var(--d) var(--e) infinite'
-  }, 10500)
+  }, 21500)
   // animation should start at 20500
 })
 continueBtn.addEventListener('click', () => {

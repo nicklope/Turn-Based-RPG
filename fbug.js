@@ -688,3 +688,6 @@ searchButton.addEventListener('click', () => {
       'color var(--d) var(--e) infinite, position var(--d) var(--e) infinite'
   }, 1500)
 })
+tryAgainBtn.addEventListener('click', () => {
+  location.href = 'fbug.html'
+})
