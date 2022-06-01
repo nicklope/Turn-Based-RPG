@@ -844,4 +844,28 @@ tryAgainBtn.addEventListener('click', () => {
 
 // Media Query
 
-const mediaQuery = window.matchMedia('(max-width: 600x)')
+function checkMediaQuery() {
+  // If the inner width of the window is greater then 768px
+  if (window.innerWidth < 768) {
+    // Then log this message to the console
+    console.log('Media Query Matched!')
+    actionBar.style.fontSize = '20px'
+    playerDisplay.style.fontSize = '15px'
+    attackBtn.style.fontSize = '14px'
+    magicBtn.style.fontSize = '14px'
+    guardBtn.style.fontSize = '14px'
+    itemBtn.style.fontSize = '14px'
+  } else if (window.innerWidth > 768) {
+    console.log('Media Query Matched!')
+    actionBar.style.fontSize = '40px'
+    playerDisplay.style.fontSize = '16px'
+    attackBtn.style.fontSize = '40px'
+    magicBtn.style.fontSize = '40px'
+    guardBtn.style.fontSize = '40px'
+    itemBtn.style.fontSize = '40px'
+  }
+}
+
+// Add a listener for when the window resizes
+window.addEventListener('resize', checkMediaQuery)
+checkMediaQuery()
