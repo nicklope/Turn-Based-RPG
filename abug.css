@@ -2,10 +2,38 @@
 * {
   font-family: 'Press Start 2P', cursive;
 }
+@media (max-width: 600px) {
+  body {
+    
+    width: 100%;
+    color: blue;
 
+  }
+  * {
+    font-size: 20px;
+    color: blue;
+
+  }
+  #action-bar {
+    width: 100%;
+    height: 20vh;
+    border: 1px solid white;
+   
+    align-self: flex-end;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    text-align: center;
+    
+    line-height: 1.3;
+    animation-name: still;
+    animation-duration: 1s;
+    background-color: black;
+    color: white;
+  }
+}
 #game-view {
   border: 1px solid black;
-  width: 1200px;
+  width: 100%;
   height: 800px;
   display: flex;
   flex-direction: column;

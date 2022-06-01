@@ -841,3 +841,7 @@ continueBtn.addEventListener('click', () => {
 tryAgainBtn.addEventListener('click', () => {
   location.href = 'abug.html'
 })
+
+// Media Query
+
+const mediaQuery = window.matchMedia('(max-width: 600x)')
