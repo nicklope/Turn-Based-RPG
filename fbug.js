@@ -60,6 +60,10 @@ let firstEnemyAttackTO = ''
 let reappendTO = ''
 let checkForWinTO1 = ''
 let checkForWinTO2 = ''
+let phase = 1
+let timerBool = false
+let bugOne = false
+let bugTwo = false
 
 // Game Start
 const searchButton = document.createElement('div')
@@ -159,7 +163,7 @@ const attack = (player, enemy) => {
       checkForWinTO1 = setTimeout(checkForWin, 2000)
       checkForWinTO2 = setTimeout(checkForWin, 6000)
       playerDisplay.innerText = ` ${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     }, 1250)
   } else if (hitRating >= 9) {
     setTimeout(function () {
@@ -172,7 +176,7 @@ const attack = (player, enemy) => {
       checkForWinTO1 = setTimeout(checkForWin, 2000)
       checkForWinTO2 = setTimeout(checkForWin, 6000)
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     }, 1000)
   } else {
     setTimeout(function () {
@@ -183,7 +187,7 @@ const attack = (player, enemy) => {
       checkForWinTO1 = setTimeout(checkForWin, 2000)
       checkForWinTO2 = setTimeout(checkForWin, 6000)
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     }, 1250)
   }
 }
@@ -209,7 +213,7 @@ const useItem = (player, item, enemy) => {
         checkForWinTO1 = setTimeout(checkForWin, 2000)
         checkForWinTO2 = setTimeout(checkForWin, 6000)
         playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-        enemyTurn(enemy)
+        checkEnemyPhase(enemy)
       }, 1750)
     } else if (player.bagelCount <= 0) {
       errorSound.play()
@@ -230,7 +234,7 @@ const useItem = (player, item, enemy) => {
         checkForWinTO1 = setTimeout(checkForWin, 2000)
         checkForWinTO2 = setTimeout(checkForWin, 6000)
         playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-        enemyTurn(enemy)
+        checkEnemyPhase(enemy)
       }, 1750)
     } else if (player.coffeeCount <= 0) {
       errorSound.play()
@@ -283,7 +287,7 @@ const fireAttack = (player, enemy) => {
 
       player.mp -= 25
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     } else if (enemy.resistances.includes('fire')) {
       enemy.hp += player.fireSpell - 10
 
@@ -296,13 +300,13 @@ const fireAttack = (player, enemy) => {
       }, 1250)
       player.mp -= 25
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     }
   } else {
     errorSound.play()
     actionBar.innerText = 'Not enough MP!'
     playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-    enemyTurn(enemy)
+    checkEnemyPhase(enemy)
   }
   checkForWinTO1 = setTimeout(checkForWin, 2000)
   checkForWinTO2 = setTimeout(checkForWin, 6000)
@@ -327,7 +331,7 @@ const waterAttack = (player, enemy) => {
 
       player.mp -= 25
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     } else if (enemy.resistances.includes('water')) {
       enemy.hp += player.waterSpell - 10
 
@@ -338,13 +342,13 @@ const waterAttack = (player, enemy) => {
       }, 1250)
       player.mp -= 25
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     }
   } else {
     errorSound.play()
     actionBar.innerText = 'Not enough MP!'
     playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-    enemyTurn(enemy)
+    checkEnemyPhase(enemy)
   }
   checkForWinTO1 = setTimeout(checkForWin, 2000)
   checkForWinTO2 = setTimeout(checkForWin, 6000)
@@ -369,7 +373,7 @@ const airAttack = (player, enemy) => {
 
       player.mp -= 20
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     } else if (enemy.resistances.includes('air')) {
       enemy.hp += player.airSpell - 10
 
@@ -380,12 +384,12 @@ const airAttack = (player, enemy) => {
       }, 1250)
       player.mp -= 20
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     }
   } else {
     errorSound.play()
     actionBar.innerText = 'Not enough MP!'
-    enemyTurn(enemy)
+    checkEnemyPhase(enemy)
   }
   checkForWinTO1 = setTimeout(checkForWin, 2000)
   checkForWinTO2 = setTimeout(checkForWin, 6000)
@@ -410,7 +414,7 @@ const earthAttack = (player, enemy) => {
 
       player.mp -= 20
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     } else if (enemy.resistances.includes('earth')) {
       enemy.hp += player.earthSpell - 10
 
@@ -421,12 +425,12 @@ const earthAttack = (player, enemy) => {
       }, 1250)
       player.mp -= 20
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-      enemyTurn(enemy)
+      checkEnemyPhase(enemy)
     }
   } else {
     errorSound.play()
     actionBar.innerText = 'Not enough MP!'
-    enemyTurn(enemy)
+    checkEnemyPhase(enemy)
   }
   checkForWinTO1 = setTimeout(checkForWin, 2000)
   checkForWinTO2 = setTimeout(checkForWin, 6000)
@@ -527,6 +531,75 @@ const enemyTurn = (enemy) => {
         reappendTO = setTimeout(appendActionBar, 1500)
       }
     }, 5000)
+  }
+}
+const enemyBugOne = (enemy) => {
+  enemyBugOneDeclarationTO = setTimeout(function () {
+    enemyTurnSound.play()
+    enemyDiv.style.animationName = 'still'
+    actionBar.style.color = 'red'
+    critSound.play()
+    actionBar.style.animationName = 'shake'
+    actionBar.innerText = `The bug caused 8 critical vulnerabilities!`
+  }, 3000)
+  enemyBugOneTO = setTimeout(function () {
+    guardBtn.style.animationName = 'leave'
+    actionBar.style.color = 'white'
+    ailmentSound.play()
+    actionBar.innerText = `The guard button couldn't deal with it and decided to leave`
+
+    reappendTO = setTimeout(function () {
+      appendActionBar()
+    }, 3000)
+  }, 5700)
+}
+const enemyBugTwo = (enemy) => {
+  enemyBugTwoDeclarationTO = setTimeout(function () {
+    enemyTurnSound.play()
+    enemyDiv.style.animationName = 'still'
+    actionBar.style.color = 'red'
+    critSound.play()
+    actionBar.style.animationName = 'shake'
+    actionBar.innerText = `The bug started crashing the program!`
+  }, 3000)
+  enemyBugTwoTO = setTimeout(function () {
+    guardBtn.style.animationName = 'leave'
+    ailmentSound.play()
+    actionBar.innerText = `Everything is all buggy!`
+
+    reappendTO = setTimeout(function () {
+      timerBool = true
+      let timer = setInterval(() => {
+        if (timerBool === true) {
+          randomButton(attackBtn, magicBtn, itemBtn)
+        }
+      }, 700)
+    }, 3000)
+  }, 5700)
+}
+const checkEnemyPhase = (enemy) => {
+  if (bugOne) {
+    guardBtn.style.animationName = 'still'
+    guardBtn.style.transform = 'translateY(-1000px)'
+  }
+  if (enemy.hp <= 100 && enemy.hp >= 20) {
+    phase = 2
+  } else if (enemy.hp <= 30) {
+    phase = 3
+  }
+
+  if (phase === 1) {
+    enemyTurn(enemy)
+  } else if (phase === 2 && bugOne === false) {
+    phase = 1
+    bugOne = true
+    enemyBugOne(enemy)
+  } else if (phase === 3 && bugTwo === false && enemy.hp > 0) {
+    phase = 1
+    bugTwo = true
+    enemyBugTwo(enemy)
+  } else {
+    enemyTurn(enemy)
   }
 }
 const checkForWin = () => {
@@ -699,6 +772,9 @@ searchButton.addEventListener('click', () => {
     screen.style.animation =
       'color var(--d) var(--e) infinite, position var(--d) var(--e) infinite'
   }, 1500)
+})
+tryAgainBtn.addEventListener('click', () => {
+  location.href = 'fbug.html'
 })
 // tryAgainBtn.addEventListener('click', () => {
 //   location.href = 'fbug.html'

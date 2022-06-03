@@ -11,8 +11,6 @@ const attackBtn = document.createElement('div')
 attackBtn.id = 'attack-btn'
 attackBtn.className = 'action-btn'
 attackBtn.innerText = 'attack'
-// attackBtn.style.backgroundImage = 'url(images/sword.png)'
-// attackBtn.innerHTML = '<img src="images/sword.png"/ alt="sword" id="sword">'
 const magicBtn = document.createElement('div')
 magicBtn.id = 'magic-btn'
 magicBtn.className = 'action-btn'
@@ -600,7 +598,7 @@ const checkEnemyPhase = (enemy) => {
     phase = 1
     bugOne = true
     enemyBugOne(enemy)
-  } else if (phase === 3 && bugTwo === false) {
+  } else if (phase === 3 && bugTwo === false && enemy.hp > 0) {
     phase = 1
     bugTwo = true
     enemyBugTwo(enemy)
