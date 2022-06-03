@@ -540,13 +540,16 @@ const enemyBugOne = (enemy) => {
     actionBar.style.color = 'red'
     critSound.play()
     actionBar.style.animationName = 'shake'
-    actionBar.innerText = `The bug caused 8 critical vulnerabilities!`
+    actionBar.innerText = `The bug started deleting a bunch of code!`
   }, 3000)
   enemyBugOneTO = setTimeout(function () {
-    guardBtn.style.animationName = 'leave'
+    attackBtn.style.animationName = 'jump'
+    magicBtn.style.animationName = 'jump'
+    guardBtn.style.animationName = 'jump'
+    itemBtn.style.animationName = 'jump'
     actionBar.style.color = 'white'
     ailmentSound.play()
-    actionBar.innerText = `The guard button couldn't deal with it and decided to leave`
+    actionBar.innerText = `The action bar has ants in its pants!`
 
     reappendTO = setTimeout(function () {
       appendActionBar()
@@ -582,7 +585,7 @@ const checkEnemyPhase = (enemy) => {
     guardBtn.style.animationName = 'still'
     guardBtn.style.transform = 'translateY(-1000px)'
   }
-  if (enemy.hp <= 100 && enemy.hp >= 20) {
+  if (enemy.hp <= 235 && enemy.hp >= 20) {
     phase = 2
   } else if (enemy.hp <= 30) {
     phase = 3

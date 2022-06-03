@@ -124,6 +124,31 @@ img {
   transform: translateY(-10px);
   cursor: pointer;
 }
+#attack-btn{
+  animation-name: still;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+
+}
+#magic-btn{
+  animation-name: still;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+
+}
+#guard-btn{
+  animation-name: still;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+
+}
+#item-btn{
+  animation-name: still;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+
+}
+
 @keyframes nouse {
   0% {
     filter: hue-rotate(10deg);
@@ -393,6 +418,11 @@ img {
       calc(var(--p) * -5) calc(var(--p) * 17),
       calc(var(--p) * 5) calc(var(--p) * 15),
       calc(var(--p) * -5) calc(var(--p) * 16);
+  }
+}
+@keyframes jump {
+  50%{
+    transform: translateY(-100px)
   }
 }
 
