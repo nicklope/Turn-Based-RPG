@@ -544,9 +544,9 @@ const enemyBugOne = (enemy) => {
   }, 3000)
   enemyBugOneTO = setTimeout(function () {
     attackBtn.style.animationName = 'jump'
-    magicBtn.style.animationName = 'jump'
-    guardBtn.style.animationName = 'jump'
-    itemBtn.style.animationName = 'jump'
+    magicBtn.style.animationName = 'magic-jump'
+    guardBtn.style.animationName = 'guard-jump'
+    itemBtn.style.animationName = 'item-jump'
     actionBar.style.color = 'white'
     ailmentSound.play()
     actionBar.innerText = `The action bar has ants in its pants!`

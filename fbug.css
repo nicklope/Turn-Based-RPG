@@ -132,13 +132,13 @@ img {
 }
 #magic-btn{
   animation-name: still;
-  animation-duration: 1s;
+  animation-duration: 10s;
   animation-iteration-count: infinite;
 
 }
 #guard-btn{
   animation-name: still;
-  animation-duration: 1s;
+  animation-duration: 2s;
   animation-iteration-count: infinite;
 
 }
@@ -421,8 +421,89 @@ img {
   }
 }
 @keyframes jump {
-  50%{
+  10%{
     transform: translateY(-100px)
   }
+  50%{
+    transform: rotate(360deg)
+  }
 }
+@keyframes magic-jump {
+  10%{
+    transform: translateY(-200px)
+  }
+  20%{
+    transform: translate(200px, -200px)
+  }
+  30%{
+    transform: translate(200px, -400px)
+  }
+  40%{
+    transform: translate(-75px, -400px)
+  }
+  50%{
+    transform: translate(-75px, -300px)
+  }
+  60%{
+    transform: translate(75px, -300px)
+  }
+  70%{
+    transform: translate(75px, -550px)
+  }
+  80%{
+    transform: translate(0px, -550px)
+  }
+  90%{
+    transform: translate(0px, -600px)
+  }
 
+}
+@keyframes guard-jump {
+  0% {
+    transform: translateX(-10px);
+  }
+  5% {
+    transform: translateX(10px);
+  }
+  15% {
+    transform: translateY(-200px);
+    transform: translateX(-10px);
+  }
+  25% {
+    transform: translateY(0px);
+    transform: translateX(10px);
+  }
+  35% {
+    transform: translateX(-10px);
+  }
+  45% {
+    transform: translateX(10px);
+  }
+  55% {
+    transform: translateX(-10px);
+  }
+  65% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-10px);
+  }
+  85% {
+    transform: translateX(10px);
+  }
+  95% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(10px);
+  }
+}
+@keyframes item-jump {
+  15%{
+    transform: translateX(-300px)
+  }
+  25%{
+    transform: translateX(0px)
+  }
+
+}
