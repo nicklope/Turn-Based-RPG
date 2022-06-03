@@ -64,6 +64,7 @@ let phase = 1
 let timerBool = false
 let bugOne = false
 let bugTwo = false
+let bugThree = false
 
 // Game Start
 const searchButton = document.createElement('div')
@@ -84,6 +85,9 @@ const clearActionBar = (parent) => {
   actionBar.style.alignItems = 'center'
 }
 const appendActionBar = () => {
+  if (bugThree) {
+    return (timerBool = true)
+  }
   actionBar.style.animationName = 'still'
   actionBar.innerText = ''
   actionBar.style.display = 'grid'
@@ -448,7 +452,7 @@ const enemyTurn = (enemy) => {
 
     firstEnemyAttackTO = setTimeout(function () {
       if (player.guarding === false) {
-        if (hitRating <= 2) {
+        if (hitRating <= 3) {
           missSound.play()
           actionBar.innerText = `Phew! ${enemy.name} missed!`
           enemyPhraseTO = setTimeout(() => {
@@ -560,10 +564,8 @@ const enemyBugTwo = (enemy) => {
   enemyBugTwoDeclarationTO = setTimeout(function () {
     eatSound.play()
     enemyDiv.style.animationName = 'still'
-    actionBar.style.color = 'red'
-    critSound.play()
     actionBar.style.animationName = 'shake'
-    actionBar.innerText = `The bug ate the item button!`
+    actionBar.innerText = `The bug ate the magic button!`
     magicBtn.style.animationName = 'still'
     magicBtn.style.transform = 'translateY(-1000px)'
   }, 3000)
@@ -577,15 +579,55 @@ const enemyBugTwo = (enemy) => {
     }, 3000)
   }, 5700)
 }
+const enemyBugThree = (enemy) => {
+  enemyBugThreeDeclarationTO = setTimeout(function () {
+    enemyTurnSound.play()
+    enemyDiv.style.animationName = 'still'
+    actionBar.style.color = 'red'
+    critSound.play()
+    actionBar.style.animationName = 'shake'
+    actionBar.innerText = `The bug started crashing the program!`
+  }, 3000)
+  enemyBugTwoTO = setTimeout(function () {
+    ailmentSound.play()
+    actionBar.innerText = `Everything is all buggy!`
+
+    reappendTO = setTimeout(function () {
+      timerBool = true
+      let timer = setInterval(() => {
+        if (timerBool === true) {
+          randomButton(attackBtn, magicBtn, itemBtn, guardBtn)
+        }
+      }, 300)
+    }, 3000)
+  }, 5700)
+}
+const randomButton = (btn1, btn2, btn3, btn4, btn5) => {
+  let arr = []
+  arr.push(btn1)
+  arr.push(btn2)
+  arr.push(btn3)
+  arr.push(btn4)
+  btn1.className = 'random-btn'
+  btn2.className = 'random-btn'
+  btn3.className = 'random-btn'
+  btn4.className = 'random-btn'
+  let i = Math.floor(Math.random() * 4)
+  console.log(i)
+  clearActionBar(actionBar)
+  actionBar.appendChild(arr[i])
+}
 const checkEnemyPhase = (enemy) => {
   if (bugTwo) {
     magicBtn.style.animationName = 'still'
     magicBtn.style.transform = 'translateY(-1000px)'
   }
-  if (enemy.hp <= 235 && enemy.hp >= 126) {
+  if (enemy.hp <= 200 && enemy.hp >= 126) {
     phase = 2
-  } else if (enemy.hp <= 125) {
+  } else if (enemy.hp <= 100 && enemy.hp >= 51) {
     phase = 3
+  } else if (enemy.hp <= 50 && enemy.hp >= 0) {
+    phase = 4
   }
 
   if (phase === 1) {
@@ -597,6 +639,10 @@ const checkEnemyPhase = (enemy) => {
   } else if (phase === 3 && bugTwo === false && enemy.hp > 0) {
     phase = 1
     bugTwo = true
+    enemyBugTwo(enemy)
+  } else if (phase === 4 && bugThree === false && enemy.hp > 0) {
+    phase = 1
+    bugThree = true
     enemyBugTwo(enemy)
   } else {
     enemyTurn(enemy)
@@ -628,6 +674,11 @@ const youWin = () => {
   clearActionBar(actionBar)
   actionBar.innerText = 'YOU WIN'
 }
+let timer = setInterval(() => {
+  if (timerBool === true) {
+    randomButton(attackBtn, magicBtn, itemBtn)
+  }
+}, 700)
 
 // Obects + constructors
 
@@ -650,7 +701,7 @@ playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
 
 const enemy = {
   name: 'Fatal Bug',
-  hp: 250,
+  hp: 230,
   mp: 100,
   damage: '',
   weaknesses: ['water'],
@@ -697,6 +748,8 @@ const closeSound = new Audio('audio/cursverti.wav')
 // Event Listeners
 
 attackBtn.addEventListener('click', () => {
+  if (bugThree) timerBool = false
+  clearInterval(timer)
   attack(player, enemy)
   fightMusic.play()
   // clearActionBar(actionBar)
@@ -708,12 +761,16 @@ guardBtn.addEventListener('click', () => {
   // actionBar.innerText = 'Thank you for playing! Fatal bug fight coming soon!'
 })
 itemBtn.addEventListener('click', () => {
+  if (bugThree) timerBool = false
+  clearInterval(timer)
   openSound.play()
   appendItemBar()
   // clearActionBar(actionBar)
   // actionBar.innerText = 'Thank you for playing! Fatal bug fight coming soon!'
 })
 magicBtn.addEventListener('click', () => {
+  if (bugThree) timerBool = false
+  clearInterval(timer)
   openSound.play()
   appendMagicBar()
   // clearActionBar(actionBar)
