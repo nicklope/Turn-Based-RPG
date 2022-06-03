@@ -570,7 +570,6 @@ const enemyBugTwo = (enemy) => {
     magicBtn.style.transform = 'translateY(-1000px)'
   }, 3000)
   enemyBugTwoTO = setTimeout(function () {
-    guardBtn.style.animationName = 'leave'
     ailmentSound.play()
     actionBar.innerText = `It gained back some hp!`
 
@@ -598,7 +597,7 @@ const enemyBugThree = (enemy) => {
         if (timerBool === true) {
           randomButton(attackBtn, magicBtn, itemBtn, guardBtn)
         }
-      }, 300)
+      }, 700)
     }, 3000)
   }, 5700)
 }
@@ -643,8 +642,9 @@ const checkEnemyPhase = (enemy) => {
   } else if (phase === 4 && bugThree === false && enemy.hp > 0) {
     phase = 1
     bugThree = true
-    enemyBugTwo(enemy)
+    enemyBugThree(enemy)
   } else {
+    phase = 1
     enemyTurn(enemy)
   }
 }
@@ -671,8 +671,29 @@ const youLose = () => {
   }, 3500)
 }
 const youWin = () => {
+  actionBar.style.color = 'white'
   clearActionBar(actionBar)
+  clearTimeout(checkForWinTO1)
+  clearTimeout(checkForWinTO2)
+  enemyDiv.style.opacity = 0
+  screen.style.animation = 'still'
+  critSound.play()
+  youWinSound.play()
   actionBar.innerText = 'YOU WIN'
+  setTimeout(() => {
+    fightMusic.pause()
+    titleMusic.play()
+    actionBar.innerText = `${player.name}... `
+  }, 5000)
+  setTimeout(() => {
+    actionBar.innerText = 'You did it...'
+  }, 8000)
+  setTimeout(() => {
+    actionBar.innerText = 'You cleared the bugs out of my code...'
+  }, 11000)
+  setTimeout(() => {
+    actionBar.innerText = '...'
+  }, 14000)
 }
 let timer = setInterval(() => {
   if (timerBool === true) {
@@ -744,6 +765,9 @@ const bugFoundSound = new Audio('audio/mysterious.wav')
 const ailmentSound = new Audio('audio/ailment.wav')
 const openSound = new Audio('audio/curshoriz.wav')
 const closeSound = new Audio('audio/cursverti.wav')
+const titleMusic = new Audio('audio/TitleScreen.mp3')
+const youWinSound = new Audio('audio/eb_win.wav')
+const youLoseSound = new Audio('audio/die.wav')
 
 // Event Listeners
 
@@ -756,6 +780,8 @@ attackBtn.addEventListener('click', () => {
   // actionBar.innerText = 'Thank you for playing! Fatal bug fight coming soon!'
 })
 guardBtn.addEventListener('click', () => {
+  if (bugThree) timerBool = false
+  clearInterval(timer)
   guard(player, enemy)
   // clearActionBar(actionBar)
   // actionBar.innerText = 'Thank you for playing! Fatal bug fight coming soon!'

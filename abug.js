@@ -635,27 +635,29 @@ const youLose = () => {
   }, 3500)
 }
 const youWin = () => {
+  actionBar.style.color = 'white'
   clearActionBar(actionBar)
   clearTimeout(checkForWinTO1)
   clearTimeout(checkForWinTO2)
   enemyDiv.style.opacity = 0
   screen.style.animation = 'still'
+  critSound.play()
   youWinSound.play()
   actionBar.innerText = 'YOU WIN'
   setTimeout(() => {
     fightMusic.pause()
     actionBar.innerText = 'hang on...'
-  }, 5000)
+  }, 3000)
   setTimeout(() => {
     actionBar.innerText = "something doesn't feel right..."
-  }, 8000)
+  }, 6000)
   setTimeout(() => {
     actionBar.innerText = ''
     actionBar.appendChild(continueBtn)
     actionBar.style.display = 'flex'
     actionBar.style.justifyContent = 'center'
     actionBar.style.alignItems = 'center'
-  }, 13000)
+  }, 9000)
 }
 
 let timer = setInterval(() => {
