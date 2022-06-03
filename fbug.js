@@ -558,36 +558,33 @@ const enemyBugOne = (enemy) => {
 }
 const enemyBugTwo = (enemy) => {
   enemyBugTwoDeclarationTO = setTimeout(function () {
-    enemyTurnSound.play()
+    eatSound.play()
     enemyDiv.style.animationName = 'still'
     actionBar.style.color = 'red'
     critSound.play()
     actionBar.style.animationName = 'shake'
-    actionBar.innerText = `The bug started crashing the program!`
+    actionBar.innerText = `The bug ate the item button!`
+    magicBtn.style.animationName = 'still'
+    magicBtn.style.transform = 'translateY(-1000px)'
   }, 3000)
   enemyBugTwoTO = setTimeout(function () {
     guardBtn.style.animationName = 'leave'
     ailmentSound.play()
-    actionBar.innerText = `Everything is all buggy!`
+    actionBar.innerText = `It gained back some hp!`
 
     reappendTO = setTimeout(function () {
-      timerBool = true
-      let timer = setInterval(() => {
-        if (timerBool === true) {
-          randomButton(attackBtn, magicBtn, itemBtn)
-        }
-      }, 700)
+      appendActionBar()
     }, 3000)
   }, 5700)
 }
 const checkEnemyPhase = (enemy) => {
-  if (bugOne) {
-    guardBtn.style.animationName = 'still'
-    guardBtn.style.transform = 'translateY(-1000px)'
+  if (bugTwo) {
+    magicBtn.style.animationName = 'still'
+    magicBtn.style.transform = 'translateY(-1000px)'
   }
-  if (enemy.hp <= 235 && enemy.hp >= 20) {
+  if (enemy.hp <= 235 && enemy.hp >= 126) {
     phase = 2
-  } else if (enemy.hp <= 30) {
+  } else if (enemy.hp <= 125) {
     phase = 3
   }
 
