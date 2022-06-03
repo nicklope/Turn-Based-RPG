@@ -51,9 +51,15 @@ const goBackBtn = document.createElement('div')
 goBackBtn.id = 'goback-btn'
 goBackBtn.className = 'action-btn'
 
+const tryAgainBtn = document.createElement('div')
+tryAgainBtn.id = 'tryagain-btn'
+tryAgainBtn.innerText = 'try again?'
+
 let enemyAttackDeclarationTO = ''
 let firstEnemyAttackTO = ''
 let reappendTO = ''
+let checkForWinTO1 = ''
+let checkForWinTO2 = ''
 
 // Game Start
 const searchButton = document.createElement('div')
@@ -150,8 +156,8 @@ const attack = (player, enemy) => {
       enemyDiv.style.animationName = 'dodge'
 
       actionBar.innerText = `Oh no! ${player.name} missed!!`
-      setTimeout(checkForWin, 2000)
-      setTimeout(checkForWin, 6000)
+      checkForWinTO1 = setTimeout(checkForWin, 2000)
+      checkForWinTO2 = setTimeout(checkForWin, 6000)
       playerDisplay.innerText = ` ${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     }, 1250)
@@ -163,8 +169,8 @@ const attack = (player, enemy) => {
         player.damage * 2
       } points of critical damage!`
       enemy.hp -= player.damage * 2
-      setTimeout(checkForWin, 2000)
-      setTimeout(checkForWin, 6000)
+      checkForWinTO1 = setTimeout(checkForWin, 2000)
+      checkForWinTO2 = setTimeout(checkForWin, 6000)
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     }, 1000)
@@ -174,8 +180,8 @@ const attack = (player, enemy) => {
       enemyDiv.style.animationName = 'blink'
       actionBar.innerText = `${enemy.name} took ${player.damage} points of damage!`
       enemy.hp -= player.damage
-      setTimeout(checkForWin, 2000)
-      setTimeout(checkForWin, 6000)
+      checkForWinTO1 = setTimeout(checkForWin, 2000)
+      checkForWinTO2 = setTimeout(checkForWin, 6000)
       playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
       enemyTurn(enemy)
     }, 1250)
@@ -200,8 +206,8 @@ const useItem = (player, item, enemy) => {
         statUpSound.play()
         player.bagelCount--
         actionBar.innerText = `${player.name} gained 50 hp!(${player.bagelCount} left)`
-        setTimeout(checkForWin, 2000)
-        setTimeout(checkForWin, 6000)
+        checkForWinTO1 = setTimeout(checkForWin, 2000)
+        checkForWinTO2 = setTimeout(checkForWin, 6000)
         playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
         enemyTurn(enemy)
       }, 1750)
@@ -221,8 +227,8 @@ const useItem = (player, item, enemy) => {
         statUpSound.play()
         player.coffeeCount--
         actionBar.innerText = `${player.name} gained back 30 mp!(${player.coffeeCount} left)`
-        setTimeout(checkForWin, 2000)
-        setTimeout(checkForWin, 6000)
+        checkForWinTO1 = setTimeout(checkForWin, 2000)
+        checkForWinTO2 = setTimeout(checkForWin, 6000)
         playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
         enemyTurn(enemy)
       }, 1750)
@@ -298,8 +304,8 @@ const fireAttack = (player, enemy) => {
     playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
     enemyTurn(enemy)
   }
-  setTimeout(checkForWin, 2000)
-  setTimeout(checkForWin, 6000)
+  checkForWinTO1 = setTimeout(checkForWin, 2000)
+  checkForWinTO2 = setTimeout(checkForWin, 6000)
 }
 const waterAttack = (player, enemy) => {
   clearActionBar(actionBar)
@@ -340,8 +346,8 @@ const waterAttack = (player, enemy) => {
     playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
     enemyTurn(enemy)
   }
-  setTimeout(checkForWin, 2000)
-  setTimeout(checkForWin, 6000)
+  checkForWinTO1 = setTimeout(checkForWin, 2000)
+  checkForWinTO2 = setTimeout(checkForWin, 6000)
 }
 const airAttack = (player, enemy) => {
   clearActionBar(actionBar)
@@ -381,8 +387,8 @@ const airAttack = (player, enemy) => {
     actionBar.innerText = 'Not enough MP!'
     enemyTurn(enemy)
   }
-  setTimeout(checkForWin, 2000)
-  setTimeout(checkForWin, 6000)
+  checkForWinTO1 = setTimeout(checkForWin, 2000)
+  checkForWinTO2 = setTimeout(checkForWin, 6000)
 }
 const earthAttack = (player, enemy) => {
   clearActionBar(actionBar)
@@ -422,8 +428,8 @@ const earthAttack = (player, enemy) => {
     actionBar.innerText = 'Not enough MP!'
     enemyTurn(enemy)
   }
-  setTimeout(checkForWin, 2000)
-  setTimeout(checkForWin, 6000)
+  checkForWinTO1 = setTimeout(checkForWin, 2000)
+  checkForWinTO2 = setTimeout(checkForWin, 6000)
 }
 const enemyTurn = (enemy) => {
   enemy.damage = randomRange(20, 23)
@@ -537,7 +543,13 @@ const checkForWin = () => {
 }
 const youLose = () => {
   clearActionBar(actionBar)
+  clearTimeout(checkForWinTO1)
+  clearTimeout(checkForWinTO2)
   actionBar.innerText = 'GAME OVER'
+  setTimeout(() => {
+    actionBar.innerText = ''
+    actionBar.appendChild(tryAgainBtn)
+  }, 3500)
 }
 const youWin = () => {
   clearActionBar(actionBar)
@@ -688,6 +700,69 @@ searchButton.addEventListener('click', () => {
       'color var(--d) var(--e) infinite, position var(--d) var(--e) infinite'
   }, 1500)
 })
-tryAgainBtn.addEventListener('click', () => {
-  location.href = 'fbug.html'
-})
+// tryAgainBtn.addEventListener('click', () => {
+//   location.href = 'fbug.html'
+// })
+
+// Media Query
+
+function checkMediaQuery() {
+  if (window.innerWidth < 768) {
+    console.log('Media Query Matched!')
+    screen.style.height = '85%'
+    actionBar.style.height = '15%'
+    actionBar.style.fontSize = '20px'
+    playerDisplay.style.fontSize = '15px'
+    attackBtn.style.fontSize = '12px'
+    magicBtn.style.fontSize = '12px'
+    guardBtn.style.fontSize = '12px'
+    itemBtn.style.fontSize = '12px'
+    fireBtn.style.fontSize = '12px'
+    waterBtn.style.fontSize = '12px'
+    earthBtn.style.fontSize = '12px'
+    airBtn.style.fontSize = '12px'
+    goBackBtn.style.fontSize = '16px'
+    pizzaBtn.style.fontSize = '15px'
+    coffeeBtn.style.fontSize = '15px'
+    enemyImg.style.height = '170px'
+  } else if (window.innerWidth > 768 && window.innerWidth <= 1024) {
+    console.log('Media Query Matched (large)!')
+    screen.style.height = '75%'
+    actionBar.style.height = '25%'
+    actionBar.style.fontSize = '30px'
+    playerDisplay.style.fontSize = '16px'
+    attackBtn.style.fontSize = '30px'
+    magicBtn.style.fontSize = '30px'
+    guardBtn.style.fontSize = '30px'
+    itemBtn.style.fontSize = '30px'
+    fireBtn.style.fontSize = '30px'
+    waterBtn.style.fontSize = '30px'
+    earthBtn.style.fontSize = '30px'
+    airBtn.style.fontSize = '30px'
+    goBackBtn.style.fontSize = '30px'
+    pizzaBtn.style.fontSize = '30px'
+    coffeeBtn.style.fontSize = '30px'
+    enemyImg.style.height = '250px'
+  } else if (window.innerWidth > 1024) {
+    console.log('Media Query Matched (large)!')
+    screen.style.height = '75%'
+    actionBar.style.height = '25%'
+    actionBar.style.fontSize = '40px'
+    playerDisplay.style.fontSize = '16px'
+    attackBtn.style.fontSize = '40px'
+    magicBtn.style.fontSize = '40px'
+    guardBtn.style.fontSize = '40px'
+    itemBtn.style.fontSize = '40px'
+    fireBtn.style.fontSize = '40px'
+    waterBtn.style.fontSize = '40px'
+    earthBtn.style.fontSize = '40px'
+    airBtn.style.fontSize = '40px'
+    goBackBtn.style.fontSize = '40px'
+    pizzaBtn.style.fontSize = '40px'
+    coffeeBtn.style.fontSize = '40px'
+    enemyImg.style.height = '250px'
+  }
+}
+
+window.addEventListener('resize', checkMediaQuery)
+checkMediaQuery()

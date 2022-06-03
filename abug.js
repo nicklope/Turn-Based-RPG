@@ -11,6 +11,8 @@ const attackBtn = document.createElement('div')
 attackBtn.id = 'attack-btn'
 attackBtn.className = 'action-btn'
 attackBtn.innerText = 'attack'
+// attackBtn.style.backgroundImage = 'url(images/sword.png)'
+// attackBtn.innerHTML = '<img src="images/sword.png"/ alt="sword" id="sword">'
 const magicBtn = document.createElement('div')
 magicBtn.id = 'magic-btn'
 magicBtn.className = 'action-btn'
@@ -63,7 +65,7 @@ tryAgainBtn.innerText = 'try again?'
 let enemyAttackDeclarationTO = ''
 let enemyBugOneDeclarationTO = ''
 let enemyBugOneTO = ''
-let enemyBugTwpDeclarationTO = ''
+let enemyBugTwoDeclarationTO = ''
 let enemyBugTwoTO = ''
 let firstEnemyAttackTO = ''
 let reappendTO = ''
@@ -792,43 +794,43 @@ searchButton.addEventListener('click', () => {
   searchButton.remove()
   startSound.play()
   actionBar.innerText = 'Searching'
-  setTimeout(() => {
-    actionBar.innerText = 'Searching.'
-  }, 1000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching..'
-  }, 2000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching...'
-  }, 3000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching.'
-  }, 4000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching..'
-  }, 5000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching...'
-  }, 6000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching.'
-  }, 7000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching..'
-  }, 8000)
-  setTimeout(() => {
-    actionBar.innerText = 'Searching...'
-  }, 9000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching.'
+  // }, 1000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching..'
+  // }, 2000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching...'
+  // }, 3000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching.'
+  // }, 4000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching..'
+  // }, 5000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching...'
+  // }, 6000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching.'
+  // }, 7000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching..'
+  // }, 8000)
+  // setTimeout(() => {
+  //   actionBar.innerText = 'Searching...'
+  // }, 9000)
   setTimeout(() => {
     bugFoundSound.play()
     enemyImg.style.opacity = 1
     actionBar.innerText = 'Bug Identified!'
-  }, 10000)
+  }, 1000)
   setTimeout(() => {
     playerDisplay.style.opacity = 1
     appendActionBar()
     fightMusic.play()
-  }, 12000)
+  }, 1200)
   setTimeout(() => {
     screen.style.animation =
       'color var(--d) var(--e) infinite, position var(--d) var(--e) infinite'
@@ -845,27 +847,62 @@ tryAgainBtn.addEventListener('click', () => {
 // Media Query
 
 function checkMediaQuery() {
-  // If the inner width of the window is greater then 768px
   if (window.innerWidth < 768) {
-    // Then log this message to the console
     console.log('Media Query Matched!')
+    screen.style.height = '85%'
+    actionBar.style.height = '15%'
     actionBar.style.fontSize = '20px'
     playerDisplay.style.fontSize = '15px'
-    attackBtn.style.fontSize = '14px'
-    magicBtn.style.fontSize = '14px'
-    guardBtn.style.fontSize = '14px'
-    itemBtn.style.fontSize = '14px'
-  } else if (window.innerWidth > 768) {
-    console.log('Media Query Matched!')
+    attackBtn.style.fontSize = '12px'
+    magicBtn.style.fontSize = '12px'
+    guardBtn.style.fontSize = '12px'
+    itemBtn.style.fontSize = '12px'
+    fireBtn.style.fontSize = '12px'
+    waterBtn.style.fontSize = '12px'
+    earthBtn.style.fontSize = '12px'
+    airBtn.style.fontSize = '12px'
+    goBackBtn.style.fontSize = '16px'
+    pizzaBtn.style.fontSize = '15px'
+    coffeeBtn.style.fontSize = '15px'
+    enemyImg.style.height = '200px'
+  } else if (window.innerWidth > 768 && window.innerWidth <= 1024) {
+    console.log('Media Query Matched (large)!')
+    screen.style.height = '75%'
+    actionBar.style.height = '25%'
+    actionBar.style.fontSize = '30px'
+    playerDisplay.style.fontSize = '16px'
+    attackBtn.style.fontSize = '30px'
+    magicBtn.style.fontSize = '30px'
+    guardBtn.style.fontSize = '30px'
+    itemBtn.style.fontSize = '30px'
+    fireBtn.style.fontSize = '30px'
+    waterBtn.style.fontSize = '30px'
+    earthBtn.style.fontSize = '30px'
+    airBtn.style.fontSize = '30px'
+    goBackBtn.style.fontSize = '30px'
+    pizzaBtn.style.fontSize = '30px'
+    coffeeBtn.style.fontSize = '30px'
+    enemyImg.style.height = '250px'
+  } else if (window.innerWidth > 1024) {
+    console.log('Media Query Matched (large)!')
+    screen.style.height = '75%'
+    actionBar.style.height = '25%'
     actionBar.style.fontSize = '40px'
     playerDisplay.style.fontSize = '16px'
     attackBtn.style.fontSize = '40px'
     magicBtn.style.fontSize = '40px'
     guardBtn.style.fontSize = '40px'
     itemBtn.style.fontSize = '40px'
+    fireBtn.style.fontSize = '40px'
+    waterBtn.style.fontSize = '40px'
+    earthBtn.style.fontSize = '40px'
+    airBtn.style.fontSize = '40px'
+    goBackBtn.style.fontSize = '40px'
+    pizzaBtn.style.fontSize = '40px'
+    coffeeBtn.style.fontSize = '40px'
+    enemyImg.style.height = '250px'
   }
 }
 
-// Add a listener for when the window resizes
 window.addEventListener('resize', checkMediaQuery)
 checkMediaQuery()
