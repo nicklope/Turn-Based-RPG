@@ -327,7 +327,7 @@ const waterAttack = (player, enemy) => {
 
       setTimeout(function () {
         waterSound.play()
-        enemyDiv.style.animationName = 'blink'
+        enemyDiv.style.animationName = 'water'
         actionBar.innerText = `OOOF! ${enemy.name} took ${
           player.waterSpell * 1.5
         } points of damage!`
@@ -447,7 +447,7 @@ const enemyTurn = (enemy) => {
     enemyAttackDeclarationTO = setTimeout(function () {
       enemyTurnSound.play()
       enemyDiv.style.animationName = 'still'
-      actionBar.innerText = `${enemy.name} went for a bite!`
+      actionBar.innerText = `${enemy.name} swung wildly!`
     }, 3000)
 
     firstEnemyAttackTO = setTimeout(function () {
@@ -464,6 +464,7 @@ const enemyTurn = (enemy) => {
           player.hp -= enemy.damage * 1.5
           playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
           actionBar.style.animationName = 'shake'
+          enemyDiv.style.animationName = 'enemy-attack'
           actionBar.innerText = `OOOF! That hit hard! Took ${
             enemy.damage * 1.5
           } points of damage!`
@@ -476,6 +477,7 @@ const enemyTurn = (enemy) => {
           player.hp -= enemy.damage
           playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
           actionBar.style.animationName = 'shake'
+          enemyDiv.style.animationName = 'enemy-attack'
           actionBar.innerText = `${player.name} took ${enemy.damage} points of damage!`
           enemyPhraseTO = setTimeout(() => {
             actionBar.innerText = `${enemy.enemyPhrases[i]}`
@@ -540,13 +542,14 @@ const enemyTurn = (enemy) => {
 const enemyBugOne = (enemy) => {
   enemyBugOneDeclarationTO = setTimeout(function () {
     enemyTurnSound.play()
-    enemyDiv.style.animationName = 'still'
+    enemyDiv.style.animationName = 'spin'
     actionBar.style.color = 'red'
     critSound.play()
     actionBar.style.animationName = 'shake'
-    actionBar.innerText = `The bug started deleting a bunch of code!`
+    actionBar.innerText = `The bug adding unnecessary code!`
   }, 3000)
   enemyBugOneTO = setTimeout(function () {
+    enemyDiv.style.animationName = 'still'
     attackBtn.style.animationName = 'jump'
     magicBtn.style.animationName = 'magic-jump'
     guardBtn.style.animationName = 'guard-jump'
@@ -563,6 +566,7 @@ const enemyBugOne = (enemy) => {
 const enemyBugTwo = (enemy) => {
   enemyBugTwoDeclarationTO = setTimeout(function () {
     eatSound.play()
+    actionBar.style.color = 'red'
     enemyDiv.style.animationName = 'still'
     actionBar.style.animationName = 'shake'
     actionBar.innerText = `The bug ate the magic button!`
@@ -571,8 +575,9 @@ const enemyBugTwo = (enemy) => {
   }, 3000)
   enemyBugTwoTO = setTimeout(function () {
     ailmentSound.play()
+    actionBar.style.color = 'white'
     actionBar.innerText = `It gained back some hp!`
-
+    enemy.hp += 30
     reappendTO = setTimeout(function () {
       appendActionBar()
     }, 3000)
@@ -582,6 +587,7 @@ const enemyBugThree = (enemy) => {
   enemyBugThreeDeclarationTO = setTimeout(function () {
     enemyTurnSound.play()
     enemyDiv.style.animationName = 'still'
+    enemyDiv.style.animationName = 'spin'
     actionBar.style.color = 'red'
     critSound.play()
     actionBar.style.animationName = 'shake'
