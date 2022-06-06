@@ -443,101 +443,54 @@ const enemyTurn = (enemy) => {
   enemy.damage = randomRange(20, 23)
   let hitRating = hitRate()
   let i = Math.floor(Math.random() * 13)
-  if (enemy.hp > 150) {
-    enemyAttackDeclarationTO = setTimeout(function () {
-      enemyTurnSound.play()
-      enemyDiv.style.animationName = 'still'
-      actionBar.innerText = `${enemy.name} swung wildly!`
-    }, 3000)
 
-    firstEnemyAttackTO = setTimeout(function () {
-      if (player.guarding === false) {
-        if (hitRating <= 3) {
-          missSound.play()
-          actionBar.innerText = `Phew! ${enemy.name} missed!`
-          enemyPhraseTO = setTimeout(() => {
-            actionBar.innerText = `${enemy.enemyPhrases[i]}`
-          }, 2600)
-          reappendTO = setTimeout(appendActionBar, 4500)
-        } else if (hitRating > 9) {
-          critSound.play()
-          player.hp -= enemy.damage * 1.5
-          playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-          actionBar.style.animationName = 'shake'
-          enemyDiv.style.animationName = 'enemy-attack'
-          actionBar.innerText = `OOOF! That hit hard! Took ${
-            enemy.damage * 1.5
-          } points of damage!`
-          enemyPhraseTO = setTimeout(() => {
-            actionBar.innerText = `${enemy.enemyPhrases[i]}`
-          }, 2500)
-          reappendTO = setTimeout(appendActionBar, 4500)
-        } else {
-          attackSound.play()
-          player.hp -= enemy.damage
-          playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-          actionBar.style.animationName = 'shake'
-          enemyDiv.style.animationName = 'enemy-attack'
-          actionBar.innerText = `${player.name} took ${enemy.damage} points of damage!`
-          enemyPhraseTO = setTimeout(() => {
-            actionBar.innerText = `${enemy.enemyPhrases[i]}`
-          }, 2500)
-          reappendTO = setTimeout(appendActionBar, 4500)
-        }
-      } else {
-        guardSound.play()
-        actionBar.innerText = `${enemy.name}'s attack bounced right off ${player.name}!`
-        player.guarding = false
-        reappendTO = setTimeout(appendActionBar, 1500)
-      }
-    }, 5000)
-  } else if (enemy.hp <= 150) {
-    enemyAttackDeclarationTO = setTimeout(function () {
-      enemyTurnSound.play()
-      enemyDiv.style.animationName = 'still'
-      actionBar.innerText = `${enemy.name} went for a bite!`
-    }, 3000)
+  enemyAttackDeclarationTO = setTimeout(function () {
+    enemyTurnSound.play()
+    enemyDiv.style.animationName = 'still'
+    actionBar.innerText = `${enemy.name} swung wildly!`
+  }, 3000)
 
-    firstEnemyAttackTO = setTimeout(function () {
-      if (player.guarding === false) {
-        if (hitRating <= 2) {
-          missSound.play()
-          actionBar.innerText = `Phew! ${enemy.name} missed!`
-          enemyPhraseTO = setTimeout(() => {
-            actionBar.innerText = `${enemy.enemyPhrases[i]}`
-          }, 2600)
-          reappendTO = setTimeout(appendActionBar, 4500)
-        } else if (hitRating > 9) {
-          critSound.play()
-          player.hp -= enemy.damage * 1.5
-          playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-          actionBar.style.animationName = 'shake'
-          actionBar.innerText = `OOOF! That hit hard! Took ${
-            enemy.damage * 1.5
-          } points of damage!`
-          enemyPhraseTO = setTimeout(() => {
-            actionBar.innerText = `${enemy.enemyPhrases[i]}`
-          }, 2500)
-          reappendTO = setTimeout(appendActionBar, 4500)
-        } else {
-          attackSound.play()
-          player.hp -= enemy.damage
-          playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
-          actionBar.style.animationName = 'shake'
-          actionBar.innerText = `${player.name} took ${enemy.damage} points of damage!`
-          enemyPhraseTO = setTimeout(() => {
-            actionBar.innerText = `${enemy.enemyPhrases[i]}`
-          }, 2500)
-          reappendTO = setTimeout(appendActionBar, 4500)
-        }
+  firstEnemyAttackTO = setTimeout(function () {
+    if (player.guarding === false) {
+      if (hitRating <= 3) {
+        missSound.play()
+        actionBar.innerText = `Phew! ${enemy.name} missed!`
+        enemyPhraseTO = setTimeout(() => {
+          actionBar.innerText = `${enemy.enemyPhrases[i]}`
+        }, 2600)
+        reappendTO = setTimeout(appendActionBar, 4500)
+      } else if (hitRating > 9) {
+        critSound.play()
+        player.hp -= enemy.damage * 1.5
+        playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
+        actionBar.style.animationName = 'shake'
+        enemyDiv.style.animationName = 'enemy-attack'
+        actionBar.innerText = `OOOF! That hit hard! Took ${
+          enemy.damage * 1.5
+        } points of damage!`
+        enemyPhraseTO = setTimeout(() => {
+          actionBar.innerText = `${enemy.enemyPhrases[i]}`
+        }, 2500)
+        reappendTO = setTimeout(appendActionBar, 4500)
       } else {
-        guardSound.play()
-        actionBar.innerText = `${enemy.name}'s attack bounced right off ${player.name}!`
-        player.guarding = false
-        reappendTO = setTimeout(appendActionBar, 1500)
+        attackSound.play()
+        player.hp -= enemy.damage
+        playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
+        actionBar.style.animationName = 'shake'
+        enemyDiv.style.animationName = 'enemy-attack'
+        actionBar.innerText = `${player.name} took ${enemy.damage} points of damage!`
+        enemyPhraseTO = setTimeout(() => {
+          actionBar.innerText = `${enemy.enemyPhrases[i]}`
+        }, 2500)
+        reappendTO = setTimeout(appendActionBar, 4500)
       }
-    }, 5000)
-  }
+    } else {
+      guardSound.play()
+      actionBar.innerText = `${enemy.name}'s attack bounced right off ${player.name}!`
+      player.guarding = false
+      reappendTO = setTimeout(appendActionBar, 1500)
+    }
+  }, 5000)
 }
 const enemyBugOne = (enemy) => {
   enemyBugOneDeclarationTO = setTimeout(function () {
@@ -546,7 +499,7 @@ const enemyBugOne = (enemy) => {
     actionBar.style.color = 'red'
     critSound.play()
     actionBar.style.animationName = 'shake'
-    actionBar.innerText = `The bug adding unnecessary code!`
+    actionBar.innerText = `The bug started adding unnecessary code!`
   }, 3000)
   enemyBugOneTO = setTimeout(function () {
     enemyDiv.style.animationName = 'still'
@@ -695,11 +648,23 @@ const youWin = () => {
     actionBar.innerText = 'You did it...'
   }, 8000)
   setTimeout(() => {
-    actionBar.innerText = 'You cleared the bugs out of my code...'
+    actionBar.innerText = 'You cleared the bugs out of my code!'
   }, 11000)
   setTimeout(() => {
-    actionBar.innerText = '...'
+    actionBar.innerText = 'err...'
   }, 14000)
+  setTimeout(() => {
+    actionBar.innerText = 'I didnt plan on you actually being able to do it'
+  }, 17000)
+  setTimeout(() => {
+    actionBar.innerText = 'I dont have an award for you...'
+  }, 20000)
+  setTimeout(() => {
+    actionBar.innerText = 'guess ill shut you down now...'
+  }, 23000)
+  setTimeout(() => {
+    window.close()
+  }, 25000)
 }
 let timer = setInterval(() => {
   if (timerBool === true) {
@@ -720,7 +685,7 @@ const player = {
   earthSpell: 16,
   guarding: false,
   pizzaBagel: 50,
-  bagelCount: 2,
+  bagelCount: 4,
   niceCoffee: 30,
   coffeeCount: 2
 }
@@ -728,7 +693,7 @@ playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
 
 const enemy = {
   name: 'Fatal Bug',
-  hp: 230,
+  hp: 270,
   mp: 100,
   damage: '',
   weaknesses: ['water'],
@@ -842,25 +807,25 @@ inspectBtn.addEventListener('click', () => {
 searchButton.addEventListener('click', () => {
   searchButton.remove()
   startSound.play()
-  // actionBar.innerText = 'the annoying bug...'
-  // setTimeout(() => {
-  //   actionBar.innerText = 'by destroying it...'
-  // }, 3000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'you made an even worse bug!'
-  // }, 7000)
+  actionBar.innerText = 'the annoying bug...'
+  setTimeout(() => {
+    actionBar.innerText = 'by destroying it...'
+  }, 3000)
+  setTimeout(() => {
+    actionBar.innerText = 'you made an even worse bug!'
+  }, 7000)
   setTimeout(() => {
     bugFoundSound.play()
     enemyImg.style.opacity = 1
     actionBar.innerText = 'Bug Identified!'
-  }, 1000)
+  }, 10000)
   setTimeout(() => {
     playerDisplay.style.opacity = 1
     appendActionBar()
     fightMusic.play()
     screen.style.animation =
       'color var(--d) var(--e) infinite, position var(--d) var(--e) infinite'
-  }, 1500)
+  }, 10500)
 })
 tryAgainBtn.addEventListener('click', () => {
   location.href = 'fbug.html'

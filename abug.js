@@ -498,6 +498,7 @@ const enemyTurn = (enemy) => {
         player.hp -= enemy.damage * 1.5
         playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
         actionBar.style.animationName = 'shake'
+        enemyDiv.style.animationName = 'enemy-attack'
         actionBar.innerText = `OOOF! That hit hard! Took ${
           enemy.damage * 1.5
         } points of damage!`
@@ -510,6 +511,7 @@ const enemyTurn = (enemy) => {
         player.hp -= enemy.damage
         playerDisplay.innerText = `${player.name} HP: ${player.hp} MP: ${player.mp}`
         actionBar.style.animationName = 'shake'
+        enemyDiv.style.animationName = 'enemy-attack'
         actionBar.innerText = `${player.name} took ${enemy.damage} points of damage!`
         enemyPhraseTO = setTimeout(() => {
           actionBar.innerText = `${enemy.enemyPhrases[i]}`
@@ -527,7 +529,7 @@ const enemyTurn = (enemy) => {
 const enemyBugOne = (enemy) => {
   enemyBugOneDeclarationTO = setTimeout(function () {
     enemyTurnSound.play()
-    enemyDiv.style.animationName = 'still'
+    enemyDiv.style.animationName = 'spin'
     actionBar.style.color = 'red'
     critSound.play()
     actionBar.style.animationName = 'shake'
@@ -547,7 +549,7 @@ const enemyBugOne = (enemy) => {
 const enemyBugTwo = (enemy) => {
   enemyBugTwoDeclarationTO = setTimeout(function () {
     enemyTurnSound.play()
-    enemyDiv.style.animationName = 'still'
+    enemyDiv.style.animationName = 'spin'
     actionBar.style.color = 'red'
     critSound.play()
     actionBar.style.animationName = 'shake'
@@ -794,43 +796,43 @@ searchButton.addEventListener('click', () => {
   searchButton.remove()
   startSound.play()
   actionBar.innerText = 'Searching'
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching.'
-  // }, 1000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching..'
-  // }, 2000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching...'
-  // }, 3000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching.'
-  // }, 4000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching..'
-  // }, 5000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching...'
-  // }, 6000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching.'
-  // }, 7000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching..'
-  // }, 8000)
-  // setTimeout(() => {
-  //   actionBar.innerText = 'Searching...'
-  // }, 9000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching.'
+  }, 1000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching..'
+  }, 2000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching...'
+  }, 3000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching.'
+  }, 4000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching..'
+  }, 5000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching...'
+  }, 6000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching.'
+  }, 7000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching..'
+  }, 8000)
+  setTimeout(() => {
+    actionBar.innerText = 'Searching...'
+  }, 9000)
   setTimeout(() => {
     bugFoundSound.play()
     enemyImg.style.opacity = 1
     actionBar.innerText = 'Bug Identified!'
-  }, 1000)
+  }, 10000)
   setTimeout(() => {
     playerDisplay.style.opacity = 1
     appendActionBar()
     fightMusic.play()
-  }, 1200)
+  }, 12000)
   setTimeout(() => {
     screen.style.animation =
       'color var(--d) var(--e) infinite, position var(--d) var(--e) infinite'

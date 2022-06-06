@@ -455,3 +455,13 @@ img {
     transform: translateY(-1000px)
   }
 }
+@keyframes spin {
+  25%{
+    transform: rotate(-360deg);
+  }
+}
+@keyframes enemy-attack{
+  25%{
+  transform: rotate3d(0, 1, 0.5, 3.142rad);
+  }
+}
