@@ -745,16 +745,19 @@ attackBtn.addEventListener('click', () => {
   fightMusic.play()
 })
 guardBtn.addEventListener('click', () => {
+  fightMusic.play()
   guard(player, enemy)
 })
 itemBtn.addEventListener('click', () => {
   if (bugTwo) timerBool = false
+  fightMusic.play()
   clearInterval(timer)
   openSound.play()
   appendItemBar()
 })
 magicBtn.addEventListener('click', () => {
   if (bugTwo) timerBool = false
+  fightMusic.play()
   clearInterval(timer)
   openSound.play()
   appendMagicBar()
@@ -854,7 +857,7 @@ function checkMediaQuery() {
     screen.style.height = '85%'
     actionBar.style.height = '15%'
     actionBar.style.fontSize = '20px'
-    playerDisplay.style.fontSize = '15px'
+    playerDisplay.style.fontSize = '16px'
     attackBtn.style.fontSize = '12px'
     magicBtn.style.fontSize = '12px'
     guardBtn.style.fontSize = '12px'

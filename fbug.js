@@ -752,6 +752,7 @@ attackBtn.addEventListener('click', () => {
 })
 guardBtn.addEventListener('click', () => {
   if (bugThree) timerBool = false
+  fightMusic.play()
   clearInterval(timer)
   guard(player, enemy)
   // clearActionBar(actionBar)
@@ -759,6 +760,7 @@ guardBtn.addEventListener('click', () => {
 })
 itemBtn.addEventListener('click', () => {
   if (bugThree) timerBool = false
+  fightMusic.play()
   clearInterval(timer)
   openSound.play()
   appendItemBar()
@@ -767,6 +769,7 @@ itemBtn.addEventListener('click', () => {
 })
 magicBtn.addEventListener('click', () => {
   if (bugThree) timerBool = false
+  fightMusic.play()
   clearInterval(timer)
   openSound.play()
   appendMagicBar()
@@ -842,7 +845,7 @@ function checkMediaQuery() {
     screen.style.height = '85%'
     actionBar.style.height = '15%'
     actionBar.style.fontSize = '20px'
-    playerDisplay.style.fontSize = '15px'
+    playerDisplay.style.fontSize = '16px'
     attackBtn.style.fontSize = '12px'
     magicBtn.style.fontSize = '12px'
     guardBtn.style.fontSize = '12px'
